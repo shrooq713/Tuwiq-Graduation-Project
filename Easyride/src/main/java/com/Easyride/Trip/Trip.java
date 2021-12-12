@@ -2,16 +2,19 @@ package com.Easyride.Trip;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 @Entity
 @Table(name="trip")
 @Data
 public class Trip {
     @Id
-    String id;
-    String pickUpLoc;
-    String dropLoc;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    int id;
+    String pickUpLat;
+    String pickUpLng;
+    String dropLat;
+    String dropLng;
     String time;
+    String day;
 }

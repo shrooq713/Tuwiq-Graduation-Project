@@ -27,9 +27,12 @@ public class TripServices {
     public Trip updateTrip(String id, Trip data) {
         Trip trip= tripRepsitory.findById(id).orElse(null);
         if(trip != null) {
-            trip.setPickUpLoc(data.getPickUpLoc());
-            trip.setDropLoc(data.getDropLoc());
+            trip.setPickUpLat(data.getPickUpLat());
+            trip.setPickUpLng(data.getPickUpLng());
+            trip.setDropLat(data.getDropLat());
+            trip.setDropLng(data.getDropLng());
             trip.setTime(data.getTime());
+            trip.setDay(data.getDay());
             tripRepsitory.save(trip);
             return trip;
         }
