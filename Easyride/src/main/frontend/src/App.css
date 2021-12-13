@@ -58,3 +58,126 @@ h1 {
 .currentLocationText {
   font-family: "Courier New", Courier, monospace;
 }
+
+/* Log in */
+
+/* Coded with love by Mutiullah Samim */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: #b3dae9 !important;
+}
+.align {
+  margin-left: 35%;
+  margin-top: 10rem;
+}
+.user_card_signUp{
+  height: 600px;
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ee8869;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+.user_card {
+  height: 400px;
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ee8869;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+.brand_logo_container {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: -75px;
+  border-radius: 50%;
+  background: #b3dae9;
+  padding: 10px;
+  text-align: center;
+}
+.brand_logo {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+.form_container {
+  margin-top: 100px;
+}
+.login_btn {
+  width: 100%;
+  height: 25px;
+  background: #c0392b !important;
+  color: white !important;
+  width: 305px;
+  height: 25px;
+  border: 0 !important;
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem !important;
+}
+
+.login_btn:hover {
+  background: #c04f42 !important;
+}
+.login_container {
+  padding: 0 2rem;
+}
+.input-group-text {
+  width: 300px;
+  height: 25px;
+  background: #e4dede !important;
+  color: rgb(75, 73, 73) !important;
+  border: 0 !important;
+  border-radius: 0.25rem 0.25rem 0.25rem 0.25rem !important;
+}
+.input_user,
+.input_pass:focus {
+  box-shadow: none !important;
+  outline: 0px !important;
+}
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #c0392b !important;
+}
+.form{
+  margin-top: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.SignHeader{
+  margin-top: 22%;
+}
+.flexForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 3px;
+}
+.gap{
+  margin-top: 20px;
+}
