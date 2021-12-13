@@ -87,9 +87,12 @@ function SignUp() {
                 Sign up
               </button>
             </div>
-            <div className="mt-4">
-              <div className="">
-                already have an account? <a href="#">Sign In</a>
+            <div className="Link_container">
+              <div>
+                Already have an account? <a href="#">Sign In</a>
+              </div>
+              <div>
+                <a href="#">Drive with us!</a>
               </div>
             </div>
           </div>

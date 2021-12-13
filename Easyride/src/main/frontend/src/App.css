@@ -70,7 +70,7 @@ body {
 }
 .align {
   margin-left: 35%;
-  margin-top: 10rem;
+  margin-top: 8rem;
 }
 .user_card_signUp{
   height: 600px;
@@ -180,4 +180,28 @@ body {
 }
 .gap{
   margin-top: 20px;
+}
+
+.Link_container{
+  display: flex;
+  row-gap: 5px;
+  flex-direction: column;
+}
+.user_card_signUp_driver{
+  height: 750px;
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ee8869;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
 }

@@ -45,9 +45,12 @@ function SignIn() {
                 Sign In
               </button>
             </div>
-            <div className="mt-4">
-              <div className="">
+            <div className="Link_container">
+              <div>
                 Don't have an account? <a href="#">Sign Up</a>
+              </div>
+              <div>
+                Are you driver? <a href="#">Sign In</a>
               </div>
             </div>
           </div>
