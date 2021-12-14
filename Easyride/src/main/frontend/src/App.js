@@ -7,11 +7,11 @@ import SignUpDriver from "./components/SignUpDriver";
 function App() {
   return (
     <>
-      {/* <Rider></Rider> */}
+      <Rider></Rider>
       {/* <SignUp></SignUp> */}
       {/* <SignIn></SignIn> */}
       {/* <SignInDriver></SignInDriver> */}
-      <SignUpDriver></SignUpDriver>
+      {/* <SignUpDriver></SignUpDriver> */}
     </>
   );
 }

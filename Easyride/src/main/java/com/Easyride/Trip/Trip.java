@@ -14,10 +14,10 @@ public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     int id;
-    private String pickUpLat;
-    private String pickUpLng;
-    private String dropLat;
-    private String dropLng;
+    private long pickUpLat;
+    private long pickUpLng;
+    private long dropLat;
+    private long dropLng;
     private String time;
     private String day;
 

@@ -1,27 +1,12 @@
 import React, { useState } from "react";
-import Search from "./Search";
-// import Locate from "./Locate";
-import {
-  GoogleMap,
-  useLoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
-import usePlacesAutocomplete, {
-  getGeocode,
-  getLatLng,
-} from "use-places-autocomplete";
-import {
-  Combobox,
-  ComboboxInput,
-  ComboboxPopover,
-  ComboboxList,
-  ComboboxOption,
-} from "@reach/combobox";
-import { formatRelative } from "date-fns";
-
+import Locate from "./Locate";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
+import SearchPickUp from "./SearchPickUp";
+import SearchDropIn from "./SearchDropIn";
+import PinDropIn from "./PinDropIn";
+import PinPickUp from "./PinPickUp";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -60,33 +45,38 @@ export default function Rider() {
     );
   };
   currentLoc();
-  console.log("Current lat and lng");
-  console.log(currentLat);
-  console.log(currentLng);
 
   const [markers, setMarkers] = React.useState([]);
-  const [selected, setSelected] = React.useState(null);
+  const [dropSelected, setDropSelected] = React.useState(null);
+  const [pickSelected, setPickSelected] = React.useState(null);
+  const [dropLocationLat, setDropLocationLat] = useState(0);
+  const [dropLocationLng, setDropLocationLng] = useState(0);
+  const [pickLocationLat, setPickLocationLat] = useState(0);
+  const [pickLocationLng, setPickLocationLng] = useState(0);
 
-  const onMapClick = React.useCallback((e) => {
-    setMarkers((current) => [
-      ...current,
-      {
-        lat: e.latLng.lat(),
-        lng: e.latLng.lng(),
-        time: new Date(),
-      },
-    ]);
-  }, []);
+  const onMapClick = (e) => {
+    setDropLocationLat(e.latLng.lat());
+    setDropLocationLng(e.latLng.lng());
+    let test = e.latLng.lat();
+  };
 
   const mapRef = React.useRef();
-  const onMapLoad = React.useCallback((map) => {
+  const onMapLoad = (map) => {
     mapRef.current = map;
-  }, []);
+  };
 
-  const panTo = React.useCallback(({ lat, lng }) => {
+  const panTo = ({ lat, lng, pinType }) => {
     mapRef.current.panTo({ lat, lng });
     mapRef.current.setZoom(14);
-  }, []);
+    if (pinType === "DropIn") {
+      setDropLocationLat(lat);
+      setDropLocationLng(lng);
+    } else {
+      setPickLocationLat(lat);
+      setPickLocationLng(lng);
+    }
+    pinType = "";
+  };
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
@@ -96,15 +86,24 @@ export default function Rider() {
       <img
         className="icon"
         src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639293991~hmac=32551fdba3422eacb6daf105dde8eb8d"
-      ></img>
+      />
       <h1>
         <span role="img" aria-label="tent">
           Easyride
         </span>
       </h1>
 
-      <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
-      <Search panTo={panTo} />
+      <Locate
+        panTo={panTo}
+        lat={currentLat}
+        lng={currentLng}
+        markers={markers}
+        setSelected={setPickSelected}
+        onMapClick={onMapClick}
+        setMarkers={setMarkers}
+      />
+      <SearchDropIn panTo={panTo} />
+      <SearchPickUp panTo={panTo} />
 
       <GoogleMap
         id="map"
@@ -115,74 +114,19 @@ export default function Rider() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {markers.map((marker) => (
-          <Marker
-            key={`${marker.lat}-${marker.lng}`}
-            position={{ lat: marker.lat, lng: marker.lng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-            icon={{
-              // url: `/bear.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
-
-        {selected ? (
-          <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
-            onCloseClick={() => {
-              setSelected(null);
-            }}
-          >
-            <div>
-              <h2>
-                <span role="img" aria-label="bear">
-                  🚗
-                </span>{" "}
-                Drop Location
-              </h2>
-              <p>Spotted {formatRelative(selected.time, new Date())}</p>
-            </div>
-          </InfoWindow>
-        ) : null}
+        <PinDropIn
+          setSelected={setDropSelected}
+          selected={dropSelected}
+          dropLocationLat={dropLocationLat}
+          dropLocationLng={dropLocationLng}
+        />
+        <PinPickUp
+          setSelected={setPickSelected}
+          selected={pickSelected}
+          pickLocationLat={pickLocationLat}
+          pickLocationLng={pickLocationLng}
+        />
       </GoogleMap>
     </div>
-  );
-}
-function Locate({ panTo, lat, lng }) {
-  return (
-    <button
-      className="locate"
-      onClick={() => {
-        console.log("current loc");
-        if (lat !== 0 && lng !== 0) {
-          panTo({
-            lat: lat,
-            lng: lng,
-          });
-        } else {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              console.log("current loc");
-              console.log(position);
-              panTo({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-            },
-            () => null
-          );
-        }
-      }}
-    >
-      <img
-        src="https://cdn-icons.flaticon.com/png/128/4284/premium/4284088.png?token=exp=1639291842~hmac=42d680974202c57fa302b448fdfae2f7"
-        alt="Current location"
-      />
-    </button>
   );
 }

@@ -10,8 +10,9 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
+import { useState } from "react";
 
-function Search({ panTo }) {
+function SearchPickUp({ panTo, placeholder }) {
   const {
     ready,
     value,
@@ -25,7 +26,7 @@ function Search({ panTo }) {
     },
   });
 
-  // https://developers.google.com/maps/documentation/javascript/reference/places-autocomplete-service#AutocompletionRequest
+  const [type, setType] = useState("");
 
   const handleInput = (e) => {
     setValue(e.target.value);
@@ -45,13 +46,13 @@ function Search({ panTo }) {
   };
 
   return (
-    <div className="search">
+    <div className="searchPickup">
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           value={value}
           onChange={handleInput}
           disabled={!ready}
-          placeholder="Search your location"
+          placeholder="Pick up"
         />
         <ComboboxPopover>
           <ComboboxList>
@@ -66,4 +67,4 @@ function Search({ panTo }) {
   );
 }
 
-export default Search;
+export default SearchPickUp;

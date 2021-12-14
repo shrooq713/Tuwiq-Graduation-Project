@@ -21,16 +21,37 @@ h1 {
 }
 
 .search {
+  display: flex;
+  flex-direction: row;
+  gap: 10rem;
   position: absolute;
-  top: 2rem;
-  left: 50%;
+  top: 6rem;
+  left: 63%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 10;
+}
+.searchDropIn {
+  position: absolute;
+  top: 6rem;
+  left: 70%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 400px;
+  z-index: 10;
+}
+.searchPickup {
+  position: absolute;
+  top: 6rem;
+  left: 30%;
   transform: translateX(-50%);
   width: 100%;
   max-width: 400px;
   z-index: 10;
 }
 
-.search input {
+.searchPickup input,
+.searchDropIn input {
   padding: 0.5rem;
   font-size: 1.5rem;
   width: 100%;
@@ -61,7 +82,6 @@ h1 {
 
 /* Log in */
 
-/* Coded with love by Mutiullah Samim */
 body {
   margin: 0;
   padding: 0;
@@ -72,7 +92,7 @@ body {
   margin-left: 35%;
   margin-top: 8rem;
 }
-.user_card_signUp{
+.user_card_signUp {
   height: 600px;
   width: 350px;
   margin-top: auto;
@@ -160,7 +180,7 @@ body {
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #c0392b !important;
 }
-.form{
+.form {
   margin-top: 25%;
   display: flex;
   justify-content: center;
@@ -168,26 +188,26 @@ body {
   gap: 40px;
 }
 
-.SignHeader{
+.SignHeader {
   margin-top: 22%;
 }
-.flexForm{
+.flexForm {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   row-gap: 3px;
 }
-.gap{
+.gap {
   margin-top: 20px;
 }
 
-.Link_container{
+.Link_container {
   display: flex;
   row-gap: 5px;
   flex-direction: column;
 }
-.user_card_signUp_driver{
+.user_card_signUp_driver {
   height: 750px;
   width: 350px;
   margin-top: auto;
