@@ -11,7 +11,7 @@ import {
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
 
-function SearchDropIn({ panTo, placeholder }) {
+function SearchDropIn({ panTo }) {
   const {
     ready,
     value,

@@ -40,7 +40,7 @@ function DriverMap() {
       () => null
     );
   };
-  currentLoc();
+  // currentLoc();
 
   const [markers, setMarkers] = React.useState([]);
   const [dropSelected, setDropSelected] = React.useState(null);
@@ -93,7 +93,7 @@ function DriverMap() {
         panTo={panTo}
         lat={currentLat}
         lng={currentLng}
-        markers={markers}
+        // markers={markers}
         setSelected={setPickSelected}
         onMapClick={onMapClick}
         setMarkers={setMarkers}

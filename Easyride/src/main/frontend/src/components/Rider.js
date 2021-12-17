@@ -88,7 +88,7 @@ export default function Rider() {
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
-  console.log();
+
   const origin = {
     lat: pickLocationLat,
     lng: pickLocationLng,
@@ -98,7 +98,7 @@ export default function Rider() {
     lat: dropLocationLat,
     lng: dropLocationLng,
   };
-
+  // get dirction between two points
   const changeDirection = (origin, destination) => {
     directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
@@ -110,8 +110,6 @@ export default function Rider() {
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           //changing the state of directions to the result of direction service
-          console.log("result for dirctions!");
-          console.log(result);
           setDirections(result);
         } else {
           console.error(`error fetching directions ${result}`);
@@ -135,10 +133,6 @@ export default function Rider() {
         panTo={panTo}
         lat={currentLat}
         lng={currentLng}
-        markers={markers}
-        setSelected={setPickSelected}
-        onMapClick={onMapClick}
-        setMarkers={setMarkers}
       />
       <SearchDropIn panTo={panTo} />
       <SearchPickUp panTo={panTo} />

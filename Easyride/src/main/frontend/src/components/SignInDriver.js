@@ -3,7 +3,6 @@ import { useNavigate } from "react-router";
 function SignInDriver() {
     const navigate = useNavigate();
   const signInClicked = () => {
-    console.log("signInClicked");
         navigate("/rider");
   };
   return (

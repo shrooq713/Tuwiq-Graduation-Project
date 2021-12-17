@@ -19,7 +19,6 @@ function PinDropIn({
             time: new Date(),
           };
           setSelected(pin);
-          console.log(pin);
         }}
         icon={{
           // url: `/bear.svg`,
