@@ -10,7 +10,6 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { useState } from "react";
 
 function SearchDropIn({ panTo, placeholder }) {
   const {
@@ -25,8 +24,6 @@ function SearchDropIn({ panTo, placeholder }) {
       radius: 100 * 1000,
     },
   });
-
-  const [type, setType] = useState("");
 
   const handleInput = (e) => {
     setValue(e.target.value);
@@ -49,8 +46,6 @@ function SearchDropIn({ panTo, placeholder }) {
   return (
     <div className="searchDropIn">
       <Combobox onSelect={handleSelect}>
-        {/* {setType("f")} */}
-        {console.log("hi")}
         <ComboboxInput
           value={value}
           onChange={handleInput}

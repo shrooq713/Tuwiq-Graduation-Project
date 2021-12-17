@@ -10,9 +10,8 @@ import {
   ComboboxOption,
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import { useState } from "react";
 
-function SearchPickUp({ panTo, placeholder }) {
+function SearchPickUp({ panTo }) {
   const {
     ready,
     value,
@@ -25,8 +24,6 @@ function SearchPickUp({ panTo, placeholder }) {
       radius: 100 * 1000,
     },
   });
-
-  const [type, setType] = useState("");
 
   const handleInput = (e) => {
     setValue(e.target.value);

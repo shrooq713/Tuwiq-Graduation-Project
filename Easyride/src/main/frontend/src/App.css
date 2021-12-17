@@ -5,7 +5,7 @@
   background: none;
   border: none;
   z-index: 100;
-  width: 6%;
+  width: 7%;
   height: 8%;
 }
 
@@ -69,7 +69,24 @@ h1 {
   width: 50px;
   cursor: pointer;
 }
-
+.locate img:hover {
+  width: 53px;
+}
+.confirm {
+  position: absolute;
+  width: 180px;
+  height: 45px;
+  top: 25%;
+  right: 42%;
+  background: rgb(78, 74, 74);
+  color: #ffffff;
+  font-size: 20px;
+  border: none;
+  z-index: 10;
+}
+.confirm:hover{
+  background: rgb(100, 95, 95);
+}
 .currentLocation {
   display: flex;
   flex-direction: column;

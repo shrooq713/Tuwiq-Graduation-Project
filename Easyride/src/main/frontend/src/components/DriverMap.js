@@ -1,20 +1,10 @@
 import React, { useState } from "react";
 import Locate from "./Locate";
-import {
-  GoogleMap,
-  useLoadScript,
-  DirectionsRenderer,
-} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
-import SearchPickUp from "./SearchPickUp";
-import SearchDropIn from "./SearchDropIn";
-import PinDropIn from "./PinDropIn";
-import PinPickUp from "./PinPickUp";
-const libraries = ["places", "directions"];
-const google = window.google;
-// const maps = google.maps;
 
+const libraries = ["places"];
 const mapContainerStyle = {
   height: "100vh",
   width: "100vw",
@@ -30,10 +20,10 @@ const center = {
   lat: 24.71,
   lng: 46.67,
 };
-let directionsService;
-export default function Rider() {
+
+function DriverMap() {
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyBqTC5xkt1ubdlktunhCxpBI9_yEiL44XQ",
+    googleMapsApiKey: "AIzaSyAhjreWRl3uJuInXHRVsaG2e2vQ7udmfqQ",
     libraries,
   });
   const [currentLat, setCurrentLat] = useState(0);
@@ -50,12 +40,11 @@ export default function Rider() {
       () => null
     );
   };
-  // currentLoc();
+  currentLoc();
 
-  const [markers, setMarkers] = useState([]);
-  const [directions, setDirections] = useState();
-  const [dropSelected, setDropSelected] = useState(null);
-  const [pickSelected, setPickSelected] = useState(null);
+  const [markers, setMarkers] = React.useState([]);
+  const [dropSelected, setDropSelected] = React.useState(null);
+  const [pickSelected, setPickSelected] = React.useState(null);
   const [dropLocationLat, setDropLocationLat] = useState(0);
   const [dropLocationLng, setDropLocationLng] = useState(0);
   const [pickLocationLat, setPickLocationLat] = useState(0);
@@ -64,13 +53,12 @@ export default function Rider() {
   const onMapClick = (e) => {
     setDropLocationLat(e.latLng.lat());
     setDropLocationLng(e.latLng.lng());
+    let test = e.latLng.lat();
   };
 
   const mapRef = React.useRef();
   const onMapLoad = (map) => {
     mapRef.current = map;
-    console.log("mapRef");
-    console.log(map);
   };
 
   const panTo = ({ lat, lng, pinType }) => {
@@ -88,37 +76,7 @@ export default function Rider() {
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
-  console.log();
-  const origin = {
-    lat: pickLocationLat,
-    lng: pickLocationLng,
-  };
 
-  const destination = {
-    lat: dropLocationLat,
-    lng: dropLocationLng,
-  };
-
-  const changeDirection = (origin, destination) => {
-    directionsService = new window.google.maps.DirectionsService();
-    directionsService.route(
-      {
-        origin: origin,
-        destination: destination,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      },
-      (result, status) => {
-        if (status === window.google.maps.DirectionsStatus.OK) {
-          //changing the state of directions to the result of direction service
-          console.log("result for dirctions!");
-          console.log(result);
-          setDirections(result);
-        } else {
-          console.error(`error fetching directions ${result}`);
-        }
-      }
-    );
-  };
   return (
     <div>
       <img
@@ -140,9 +98,6 @@ export default function Rider() {
         onMapClick={onMapClick}
         setMarkers={setMarkers}
       />
-      <SearchDropIn panTo={panTo} />
-      <SearchPickUp panTo={panTo} />
-
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -152,30 +107,11 @@ export default function Rider() {
         onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        <PinDropIn
-          setSelected={setDropSelected}
-          selected={dropSelected}
-          dropLocationLat={dropLocationLat}
-          dropLocationLng={dropLocationLng}
-        />
-        <PinPickUp
-          setSelected={setPickSelected}
-          selected={pickSelected}
-          pickLocationLat={pickLocationLat}
-          pickLocationLng={pickLocationLng}
-        />
-        {directions && <DirectionsRenderer directions={directions} />}
+
       </GoogleMap>
-      <button
-        className="confirm"
-        onClick={() => {
-          //confirm order here
-          console.log("conf clikcked");
-          changeDirection(origin, destination);
-        }}
-      >
-        Confirm order
-      </button>
+
     </div>
   );
 }
+
+export default DriverMap;
