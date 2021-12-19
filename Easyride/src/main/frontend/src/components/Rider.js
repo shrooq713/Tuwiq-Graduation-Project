@@ -4,6 +4,7 @@ import {
   GoogleMap,
   useLoadScript,
   DirectionsRenderer,
+  DistanceMatrixService,
 } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
@@ -12,8 +13,6 @@ import SearchDropIn from "./SearchDropIn";
 import PinDropIn from "./PinDropIn";
 import PinPickUp from "./PinPickUp";
 const libraries = ["places", "directions"];
-const google = window.google;
-// const maps = google.maps;
 
 const mapContainerStyle = {
   height: "100vh",
@@ -75,7 +74,7 @@ export default function Rider() {
 
   const panTo = ({ lat, lng, pinType }) => {
     mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
+    mapRef.current.setZoom(13);
     if (pinType === "DropIn") {
       setDropLocationLat(lat);
       setDropLocationLng(lng);
@@ -98,7 +97,7 @@ export default function Rider() {
     lat: dropLocationLat,
     lng: dropLocationLng,
   };
-  // get dirction between two points
+  // get dirction between two points, distance and duration
   const changeDirection = (origin, destination) => {
     directionsService = new window.google.maps.DirectionsService();
     directionsService.route(
@@ -106,17 +105,29 @@ export default function Rider() {
         origin: origin,
         destination: destination,
         travelMode: window.google.maps.TravelMode.DRIVING,
+        drivingOptions: {
+          departureTime: new Date(Date.now()),
+          trafficModel: "bestguess",
+        },
       },
       (result, status) => {
         if (status === window.google.maps.DirectionsStatus.OK) {
           //changing the state of directions to the result of direction service
           setDirections(result);
+          // console.log("result");
+          // console.log(result);
+          // console.log(result.routes[0].legs[0].distance.text);
+          // console.log(result.routes[0].legs[0].duration.text);
         } else {
           console.error(`error fetching directions ${result}`);
         }
       }
     );
   };
+  console.log("fimvflkmv.fl>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+  console.log(directions.routes[0].legs[0].distance.text);
+  console.log(directions.routes[0].legs[0].duration.text);
+
   return (
     <div>
       <img
@@ -129,11 +140,7 @@ export default function Rider() {
         </span>
       </h1>
 
-      <Locate
-        panTo={panTo}
-        lat={currentLat}
-        lng={currentLng}
-      />
+      <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
       <SearchDropIn panTo={panTo} />
       <SearchPickUp panTo={panTo} />
 
@@ -159,6 +166,17 @@ export default function Rider() {
           pickLocationLng={pickLocationLng}
         />
         {directions && <DirectionsRenderer directions={directions} />}
+        <DistanceMatrixService
+          options={{
+            destinations: destination,
+            origins: origin,
+            travelMode: "DRIVING",
+          }}
+          callback={(response) => {
+            console.log("Distance");
+            console.log(response);
+          }}
+        />
       </GoogleMap>
       <button
         className="confirm"

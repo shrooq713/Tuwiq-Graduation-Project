@@ -3,7 +3,6 @@ function Locate({ panTo, lat, lng }) {
     <button
       className="locate"
       onClick={() => {
-        console.log("current loc");
         if (lat !== 0 && lng !== 0) {
           panTo({
             lat: lat,
@@ -12,7 +11,6 @@ function Locate({ panTo, lat, lng }) {
         } else {
           navigator.geolocation.getCurrentPosition(
             (position) => {
-              console.log("current loc");
               console.log(position);
               panTo({
                 lat: position.coords.latitude,
