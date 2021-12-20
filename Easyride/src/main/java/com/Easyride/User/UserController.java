@@ -15,6 +15,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping
+    public User register(@RequestBody Form form){
+        return userService.register(form);
+    }
+
     @GetMapping("/{id}")
     public User getuser(@PathVariable String id){
         return userService.getUser(id);
