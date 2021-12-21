@@ -124,9 +124,6 @@ export default function Rider() {
       }
     );
   };
-  console.log("fimvflkmv.fl>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-  console.log(directions.routes[0].legs[0].distance.text);
-  console.log(directions.routes[0].legs[0].duration.text);
 
   return (
     <div>

@@ -10,21 +10,12 @@ import DriverMap from "./components/DriverMap";
 function App() {
   return (
     <>
-      {/* <Rider></Rider> */}
-      {/* <DriverMap></DriverMap> */}
-      {/* <SignUp></SignUp> */}
-      {/* <SignIn></SignIn> */}
-      {/* <SignInDriver></SignInDriver> */}
-      {/* <SignUpDriver></SignUpDriver> */}
       <BrowserRouter>
         <div>
           <Routes>
-            {/* <LogIn></LogIn> 
-      <Table></Table>*/}
-
             <Route path="/" element={<SignUp />} />
             <Route path="/signIn" element={<SignIn />} />
-            <Route path="/signInDriver" element={<SignInDriver />} />
+            {/* <Route path="/signInDriver" element={<SignInDriver />} /> */}
             <Route path="/SignUpDriver" element={<SignUpDriver />} />
             <Route path="/rider" element={<Rider />} />
             <Route path="/driver/Map" element={<DriverMap />} />
