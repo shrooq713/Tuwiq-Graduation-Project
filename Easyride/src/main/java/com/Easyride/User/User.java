@@ -2,6 +2,7 @@ package com.Easyride.User;
 
 import com.Easyride.Driver.Driver;
 import com.Easyride.Rider.Rider;
+import com.Easyride.Role.Role;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,5 +25,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Driver> drivers = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Role> roles = new ArrayList<>();
 
 }
