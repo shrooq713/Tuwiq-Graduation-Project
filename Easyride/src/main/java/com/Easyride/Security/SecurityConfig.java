@@ -39,11 +39,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), null);
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), userRepository);
         customAuthenticationFilter.setFilterProcessesUrl("/login");
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Define the authorization patterns below
+        http.authorizeRequests().antMatchers(POST, "/login/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/users").permitAll();
         http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
         http.authorizeRequests().antMatchers( "/driver/**").hasAnyAuthority("Driver");
