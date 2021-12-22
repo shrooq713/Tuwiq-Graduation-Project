@@ -18,7 +18,6 @@ function SignIn() {
         console.log(res.data);
         const token = res.data.access_token;
         const decode = jwt_decode(token);
-        // console.log();
         if(decode.roles[0]==='Rider'){
           navigate("/rider");
         }else if(decode.roles[0]==='Driver'){
