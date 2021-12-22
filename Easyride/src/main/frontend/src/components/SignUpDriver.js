@@ -188,7 +188,7 @@ function SignUpDriver() {
             <div className="Link_container">
               <div>
                 Already have an account?
-                <Link to="/SignInDriver">Sign In</Link>
+                <Link to="/signIn">Sign In</Link>
               </div>
             </div>
           </div>
