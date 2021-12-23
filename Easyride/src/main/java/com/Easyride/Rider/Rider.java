@@ -4,13 +4,17 @@ import com.Easyride.Trip.Trip;
 import com.Easyride.User.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name="Rider")
 @Data
+@RequiredArgsConstructor
 public class Rider {
     @Id
     private String id;
@@ -20,6 +24,14 @@ public class Rider {
     private String phoneNumber;
     private String email;
 
+    public Rider(String id, String firstName, String lastName, String password, String phoneNumber, String email){
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
     @JsonIgnore
     @OneToMany(mappedBy = "rider", fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
@@ -29,4 +41,5 @@ public class Rider {
     @JoinColumn(name = "user_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
+
 }
