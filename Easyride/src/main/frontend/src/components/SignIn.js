@@ -21,7 +21,7 @@ function SignIn() {
         if(decode.roles[0]==='Rider'){
           navigate("/rider");
         }else if(decode.roles[0]==='Driver'){
-          // navigate("/driver");
+          navigate("/driver");
           console.log("Driver");
         }
       })
