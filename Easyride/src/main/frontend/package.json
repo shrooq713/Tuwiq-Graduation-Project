@@ -16,6 +16,8 @@
     "react-native-maps-directions": "^1.8.0",
     "react-router-dom": "^6.1.1",
     "react-scripts": "4.0.3",
+    "react-stomp": "^5.1.0",
+    "sockjs": "^0.3.24",
     "use-places-autocomplete": "^1.11.0",
     "web-vitals": "^1.1.2"
   },
