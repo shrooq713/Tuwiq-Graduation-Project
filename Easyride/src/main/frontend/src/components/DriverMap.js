@@ -3,6 +3,7 @@ import Locate from "./Locate";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
+import DriverCurrentLocation from "./DriverCurrentLocation";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -89,7 +90,7 @@ function DriverMap() {
         </span>
       </h1>
 
-      <Locate
+      {/* <Locate
         panTo={panTo}
         lat={currentLat}
         lng={currentLng}
@@ -97,7 +98,8 @@ function DriverMap() {
         setSelected={setPickSelected}
         onMapClick={onMapClick}
         setMarkers={setMarkers}
-      />
+      /> */}
+      <DriverCurrentLocation />
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
@@ -106,10 +108,7 @@ function DriverMap() {
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
-      >
-
-      </GoogleMap>
-
+      ></GoogleMap>
     </div>
   );
 }
