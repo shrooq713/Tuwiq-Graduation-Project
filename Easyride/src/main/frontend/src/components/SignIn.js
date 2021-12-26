@@ -1,11 +1,39 @@
+import axios from "axios";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 function SignIn() {
   const navigate = useNavigate();
   const signInClicked = () => {
-    console.log("signInClicked");
-        navigate("/rider");
+    const data = {
+      userName,
+      password,
+    };
+
+    axios
+      .post("http://localhost:8080/login", data)
+      .then((res) => {
+        console.log("Data::");
+        console.log(res.data);
+        const token = res.data.access_token;
+        const decode = jwt_decode(token);
+        if(decode.roles[0]==='Rider'){
+          navigate("/rider");
+        }else if(decode.roles[0]==='Driver'){
+          navigate("/driver");
+          console.log("Driver");
+        }
+      })
+      .catch((err) => {
+        console.log("Error::");
+        console.log(err);
+      });
+    navigate("/rider");
   };
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+
   return (
     <div className="align container h-100">
       <div className="">
@@ -30,6 +58,9 @@ function SignIn() {
                     className="input-group-text"
                     placeholder="user name"
                     required
+                    onChange={(e) => {
+                      setUserName(e.target.value);
+                    }}
                   />
                 </div>
                 <div>
@@ -41,6 +72,9 @@ function SignIn() {
                     className="input-group-text"
                     placeholder="password"
                     required
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                    }}
                   />
                 </div>
               </div>
@@ -48,17 +82,22 @@ function SignIn() {
           </div>
           <div className="flexForm">
             <div className="login_container">
-              <button type="button" name="button" className="login_btn gap" onClick={signInClicked}>
+              <button
+                type="button"
+                name="button"
+                className="login_btn gap"
+                onClick={signInClicked}
+              >
                 Sign In
               </button>
             </div>
             <div className="Link_container">
               <div>
-                Don't have an account? 
+                Don't have an account?
                 <Link to="/">Sign Up</Link>
               </div>
               <div>
-                Are you driver? 
+                Are you driver?
                 <Link to="/signInDriver">Sign In</Link>
               </div>
             </div>

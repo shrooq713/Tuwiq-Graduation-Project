@@ -1,5 +1,6 @@
 package com.Easyride.Rider;
 
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -22,4 +23,5 @@ class RiderRepositoryTest {
 //        Rider result = riderRepository.findById(savedRider.getId()).orElse(null);
 //        assertNotNull(result);
     }
+
 }

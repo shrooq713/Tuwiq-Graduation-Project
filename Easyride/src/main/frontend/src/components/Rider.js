@@ -124,6 +124,7 @@ export default function Rider() {
       }
     );
   };
+
   return (
     <div>
       <img

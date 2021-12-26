@@ -94,7 +94,6 @@ function DriverMap() {
         panTo={panTo}
         lat={currentLat}
         lng={currentLng}
-        // markers={markers}
         setSelected={setPickSelected}
         onMapClick={onMapClick}
         setMarkers={setMarkers}
@@ -108,6 +107,7 @@ function DriverMap() {
         options={options}
         onClick={onMapClick}
         onLoad={onMapLoad}
+
       ></GoogleMap>
     </div>
   );
