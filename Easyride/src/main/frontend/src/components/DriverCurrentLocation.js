@@ -58,18 +58,7 @@ function DriverCurrentLocation() {
         onMessage={(msg) => onMessageReceived(msg)}
         debug={false}
         ref={(client) => (clientRef = client)}
-      />
-      <div>{message}</div>
-      <button
-        onClick={() => {
-          sendMessage(
-            JSON.stringify({ message: "webSocket send msg from front-end" })
-          );
-        }}
-      >
-        {" "}
-        button
-      </button>
+      /> 
     </div>
   );
 }
