@@ -99,7 +99,7 @@ function DriverMap() {
         setMarkers={setMarkers}
       /> */}
       <DriverCurrentLocation />
-      <GoogleMap
+      {/* <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
         zoom={12}
@@ -108,7 +108,7 @@ function DriverMap() {
         onClick={onMapClick}
         onLoad={onMapLoad}
 
-      ></GoogleMap>
+      ></GoogleMap> */}
     </div>
   );
 }

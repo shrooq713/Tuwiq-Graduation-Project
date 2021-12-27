@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // This connects with Server’s STOMP endpoint (in websocketconfig) and listens message on “/topic/message”.
 // After connection is established, message sent to “/topic/message” is received
 // and handled by onMessageReceived method.
 import SockJsClient from "react-stomp";
 
-const SOCKET_URL = "http://localhost:8082/ws-message";
+const SOCKET_URL = "http://localhost:8083/ws-message";
 
 function DriverCurrentLocation() {
   const [message, setMessage] = useState("You server message here.");
-  const [currentLocation, setCurrentLocation] = useState({});
-  const [connection, setConnect] = useState("connected");
-
-  let onConnected = () => {
-    setConnect(connection);
-    console.log("Connected!!");
+  const [connection, setConnect] = useState("");
+  let clientRef = React.useRef();
+  let onConnected = (e) => {
+    setConnect("connected");
+    console.log("connect");
   };
 
   let onMessageReceived = (msg) => {
@@ -21,40 +20,56 @@ function DriverCurrentLocation() {
     console.log(msg);
     setMessage(msg.message);
   };
-
-  // Check for died connections at regular intervals.
-  setInterval(function () {
-    // wsServer.clients.forEach(function(connection) {
-    if (connection === "connected") {
-      console.log("Connection alive", connection.id);
-      // return connection.terminate();
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          console.log(position.coords.latitude);
-          let location = position.coords.latitude +","+position.coords.longitude
-          setCurrentLocation(location)
-        },
-        () => null
-      );
-    }
-    // Request the client to respond with pong. Client does this automatically.
-    // }
-    // );
-  }, 50000);
-
-  console.log(currentLocation);
+  const sendMessage = async (msg) => {
+    console.log("in send msg");
+    console.log(clientRef);
+    const data = await clientRef.sendMessage("/app/sendMessage", msg);
+    console.log(data);
+  };
+  useEffect(() => {
+    setInterval(() => {
+      if (connection === "connected") {
+        console.log("cccccc  ");
+        console.log(clientRef);
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            console.log("position");
+            console.log(position);
+            sendMessage(
+              JSON.stringify({
+                message:
+                  position.coords.latitude + "," + position.coords.longitude,
+              })
+            );
+          },
+          () => null
+        );
+      }
+    }, 5000);
+  }, [connection]);
 
   return (
     <div>
       <SockJsClient
         url={SOCKET_URL}
         topics={["/topic/message"]}
-        onConnect={onConnected}
+        onConnect={(e) => onConnected()}
         onDisconnect={console.log("Disconnected!")}
         onMessage={(msg) => onMessageReceived(msg)}
         debug={false}
+        ref={(client) => (clientRef = client)}
       />
       <div>{message}</div>
+      <button
+        onClick={() => {
+          sendMessage(
+            JSON.stringify({ message: "webSocket send msg from front-end" })
+          );
+        }}
+      >
+        {" "}
+        button
+      </button>
     </div>
   );
 }

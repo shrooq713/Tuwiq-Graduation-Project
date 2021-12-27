@@ -29,7 +29,7 @@ function SignIn() {
         console.log("Error::");
         console.log(err);
       });
-    navigate("/rider");
+    // navigate("/rider");
   };
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
