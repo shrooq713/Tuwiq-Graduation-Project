@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Locate from "./Locate";
 import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
@@ -27,52 +26,11 @@ function DriverMap() {
     googleMapsApiKey: "AIzaSyAhjreWRl3uJuInXHRVsaG2e2vQ7udmfqQ",
     libraries,
   });
-  const [currentLat, setCurrentLat] = useState(0);
-  const [currentLng, setCurrentLng] = useState(0);
-
-  const currentLoc = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log("current loc");
-        console.log(position);
-        setCurrentLat(position.coords.latitude);
-        setCurrentLng(position.coords.longitude);
-      },
-      () => null
-    );
-  };
-  // currentLoc();
-
-  const [markers, setMarkers] = React.useState([]);
-  const [dropSelected, setDropSelected] = React.useState(null);
-  const [pickSelected, setPickSelected] = React.useState(null);
-  const [dropLocationLat, setDropLocationLat] = useState(0);
-  const [dropLocationLng, setDropLocationLng] = useState(0);
-  const [pickLocationLat, setPickLocationLat] = useState(0);
-  const [pickLocationLng, setPickLocationLng] = useState(0);
-
-  const onMapClick = (e) => {
-    setDropLocationLat(e.latLng.lat());
-    setDropLocationLng(e.latLng.lng());
-    let test = e.latLng.lat();
-  };
 
   const mapRef = React.useRef();
+
   const onMapLoad = (map) => {
     mapRef.current = map;
-  };
-
-  const panTo = ({ lat, lng, pinType }) => {
-    mapRef.current.panTo({ lat, lng });
-    mapRef.current.setZoom(14);
-    if (pinType === "DropIn") {
-      setDropLocationLat(lat);
-      setDropLocationLng(lng);
-    } else {
-      setPickLocationLat(lat);
-      setPickLocationLng(lng);
-    }
-    pinType = "";
   };
 
   if (loadError) return "Error";
@@ -89,15 +47,6 @@ function DriverMap() {
           Easyride
         </span>
       </h1>
-
-      {/* <Locate
-        panTo={panTo}
-        lat={currentLat}
-        lng={currentLng}
-        setSelected={setPickSelected}
-        onMapClick={onMapClick}
-        setMarkers={setMarkers}
-      /> */}
       <DriverCurrentLocation />
       <GoogleMap
         id="map"
@@ -105,9 +54,7 @@ function DriverMap() {
         zoom={12}
         center={center}
         options={options}
-        onClick={onMapClick}
         onLoad={onMapLoad}
-
       ></GoogleMap>
     </div>
   );
