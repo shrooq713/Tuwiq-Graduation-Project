@@ -1,8 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { setToken, setUser } from "../reducers/User/User";
+import { useDispatch } from "react-redux";
 function SignUp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [riderUserName, setRiderUserName] = useState("");
   const [riderFName, setRiderFName] = useState("");
   const [riderLName, setRiderLName] = useState("");
@@ -10,28 +14,60 @@ function SignUp() {
   const [riderEmail, setRiderEmail] = useState("");
   const [riderPhone, setRiderPhone] = useState("");
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8084/rider")
-  //     .then((response) => setRider(response.data))
-  //     .catch((error) => console.log(error));
-  // }, []);
-
   const signUpClicked = () => {
     console.log("signUpClicked");
-    axios
-      .post("http://localhost:8084/rider", {
-        id: riderUserName,
-        firstName: riderFName,
-        lastName: riderLName,
+
+    let user = {
+      user: {
+        userName: riderUserName,
         password: riderPassword,
-        phoneNumber: riderPhone,
-        email: riderEmail,
-      })
-      .then(function (response) {
-        console.log(response);
-        navigate("/rider");
-      });
+      },
+      role_id: 9,
+    };
+    // axios.post("http://localhost:8080/users", user).then(function (response) {
+    //   console.log(response.data);
+    //   if (response.data == null) {
+    //     console.log("UserName exist! please choose unique userName");
+    //   } else {
+    //     let rider = {
+    //       id: riderUserName,
+    //       firstName: riderFName,
+    //       lastName: riderLName,
+    //       password: riderPassword,
+    //       phoneNumber: riderPhone,
+    //       email: riderEmail,
+    //     };
+    //     axios
+    //       .post("http://localhost:8080/rider", rider)
+    //       .then(function (response) {
+    //         console.log(response.data);
+    //         if (response.data === null) {
+    //           console.log("email exist! please choose unique userName");
+    //         } else {
+    //           const action = setUser(rider);
+    //           dispatch(action);
+    //           user = { username: riderUserName, password: riderPassword };
+    //           axios
+    //             .post("http://localhost:8080/login", user)
+    //             .then(function (response) {
+    //               console.log(response.data);
+    //               const token = response.data.access_token;
+    //               const action_token = setToken(token);
+    //               dispatch(action_token);
+    //               navigate("/rider");
+    //             })
+    //             .catch(function (error) {
+    //               console.error(error);
+    //             });
+    //         }
+    //       })
+    //       .catch(function (error) {
+    //         console.error(error);
+    //       });
+    // }
+    // console.log(response);
+    // navigate("/rider");
+    // });
   };
   return (
     <div className="align container h-100">

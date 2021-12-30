@@ -23,6 +23,7 @@ public class Driver {
     private String password;
     private String carImg;
     private String phoneNumber;
+    @Column(unique = true)
     private String email;
 
     @JsonIgnore

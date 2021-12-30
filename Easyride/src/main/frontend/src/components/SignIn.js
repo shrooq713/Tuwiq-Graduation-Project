@@ -21,10 +21,10 @@ function SignIn() {
 
     axios
       .post("http://localhost:8080/login", data)
-      .then((res) => {
+      .then((response) => {
         console.log("Data::");
-        console.log(res.data);
-        const token = res.data.access_token;
+        console.log(response.data);
+        const token = response.data.access_token;
         const decode = jwt_decode(token);
 
         const config = {
@@ -58,7 +58,7 @@ function SignIn() {
         //       console.error(error);
         //     });
         //   navigate("/rider");
-        // } 
+        // }
         // else if (decode.roles[0] === "Driver") {
         //   // get the student using the login user id
         //   axios
@@ -77,7 +77,6 @@ function SignIn() {
         //   navigate("/driver");
         //   console.log("Driver");
         // }
-
       })
       .catch((err) => {
         console.log("Error::");
