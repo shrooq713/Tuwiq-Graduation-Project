@@ -18,6 +18,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.List;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
@@ -56,8 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/login/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/users").permitAll();
         http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
-        http.authorizeRequests().antMatchers( "/driver/**").hasAnyAuthority("Driver");
-        http.authorizeRequests().antMatchers( "/rider/**").hasAnyAuthority("Rider");
+        http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
+        http.authorizeRequests().antMatchers(POST,"/rider/").permitAll();
+        http.authorizeRequests().antMatchers( GET,"/driver/**").hasAnyAuthority("Driver");
+        http.authorizeRequests().antMatchers( GET,"/rider/**").hasAnyAuthority("Rider");
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }

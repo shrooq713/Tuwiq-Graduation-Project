@@ -22,6 +22,7 @@ public class Rider {
     private String lastName;
     private String password;
     private String phoneNumber;
+    @Column(unique = true)
     private String email;
 
     public Rider(String id, String firstName, String lastName, String password, String phoneNumber, String email){
