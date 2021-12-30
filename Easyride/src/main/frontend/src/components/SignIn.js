@@ -4,8 +4,12 @@ function SignIn() {
   const navigate = useNavigate();
   const signInClicked = () => {
     console.log("signInClicked");
+
+
+    
         navigate("/rider");
   };
+
   return (
     <div className="align container h-100">
       <div className="">
