@@ -33,14 +33,50 @@ function SignIn() {
 
         // add user to redux
         console.log(decode);
-        const action = setUser({
-          id: decode.id,
-          userName: decode.sub,
-        });
-        dispatch(action);
+
+        console.log("token");
+        console.log(token);
+        // const action = setUser({
+        //   id: decode.id,
+        //   userName: decode.sub,
+        // });
+        // dispatch(action);
 
         const action_token = setToken({ token });
         dispatch(action_token);
+
+        // if (decode.roles[0] === "Rider") {
+        //   console.log("inside rider");
+        //   axios
+        //     .get(`http://localhost:8080/rider/rider/user/${decode.id}`, config)
+        //     .then(function (response) {
+        //       const action = setUser(response.data);
+        //       dispatch(action);
+        //       console.log(response.data);
+        //     })
+        //     .catch(function (error) {
+        //       console.error(error);
+        //     });
+        //   navigate("/rider");
+        // } 
+        // else if (decode.roles[0] === "Driver") {
+        //   // get the student using the login user id
+        //   axios
+        //     .get(
+        //       `http://localhost:8080/driver/driver/user/${decode.id}`,
+        //       config
+        //     )
+        //     .then(function (response) {
+        //       const action2 = setUser(response.data);
+        //       dispatch(action2);
+        //       console.log(response.data);
+        //     })
+        //     .catch(function (error) {
+        //       console.error(error);
+        //     });
+        //   navigate("/driver");
+        //   console.log("Driver");
+        // }
 
       })
       .catch((err) => {

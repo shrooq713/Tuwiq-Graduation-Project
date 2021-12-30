@@ -42,4 +42,9 @@ public class RiderServices {
         riderRepository.deleteById(id);
         return rider;
     }
+
+    public Rider getRiderByUserId(String userId) {
+        System.out.println("userId: "+userId);
+        return riderRepository.findRiderByUserId(userId);
+    }
 }
