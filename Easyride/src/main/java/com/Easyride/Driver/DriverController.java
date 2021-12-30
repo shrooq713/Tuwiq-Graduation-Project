@@ -1,5 +1,6 @@
 package com.Easyride.Driver;
 
+import com.Easyride.Rider.Rider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +42,11 @@ public class DriverController {
     @DeleteMapping ("/{id}")
     public Driver deleteDriver(@PathVariable String id){
         return driverServices.deleteDriver(id);
+    }
+
+    @GetMapping("/driver/user/{userId}")
+    public Driver getStudentByUserId(@PathVariable String userId)
+    {
+        return driverServices.getRiderByUserId(userId);
     }
 }

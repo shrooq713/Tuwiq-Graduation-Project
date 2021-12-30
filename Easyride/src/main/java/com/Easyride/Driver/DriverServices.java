@@ -1,5 +1,6 @@
 package com.Easyride.Driver;
 
+import com.Easyride.Rider.Rider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,10 @@ public class DriverServices {
         Driver driver = driverRepository.findById(id).orElse(null);
         driverRepository.deleteById(id);
         return driver;
+    }
+
+    public Driver getRiderByUserId(String userId) {
+        return driverRepository.findDriverByUserId(userId);
+
     }
 }

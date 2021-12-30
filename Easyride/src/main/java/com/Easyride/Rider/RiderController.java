@@ -41,4 +41,10 @@ public class RiderController {
     public Rider deleteRider(@PathVariable String id){
         return riderServices.deleteRider(id);
     }
+
+    @GetMapping("/rider/user/{userId}")
+    public Rider getStudentByUserId(@PathVariable String userId)
+    {
+        return riderServices.getRiderByUserId(userId);
+    }
 }
