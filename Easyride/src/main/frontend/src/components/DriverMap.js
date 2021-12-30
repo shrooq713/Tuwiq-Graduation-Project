@@ -48,6 +48,7 @@ function DriverMap() {
         </span>
       </h1>
       <DriverCurrentLocation />
+
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
