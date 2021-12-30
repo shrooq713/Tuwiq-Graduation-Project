@@ -43,8 +43,9 @@ public class RiderController {
     }
 
     @GetMapping("/rider/user/{userId}")
-    public Rider getStudentByUserId(@PathVariable String userId)
+    public Rider getRiderByUserId(@PathVariable String userId)
     {
-        return riderServices.getRiderByUserId(userId);
+        Rider r =  riderServices.getRiderByUserId(userId);
+        return r;
     }
 }

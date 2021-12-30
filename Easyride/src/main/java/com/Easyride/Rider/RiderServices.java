@@ -44,6 +44,7 @@ public class RiderServices {
     }
 
     public Rider getRiderByUserId(String userId) {
+        System.out.println("userId: "+userId);
         return riderRepository.findRiderByUserId(userId);
     }
 }

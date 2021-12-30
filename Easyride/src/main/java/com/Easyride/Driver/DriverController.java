@@ -45,7 +45,7 @@ public class DriverController {
     }
 
     @GetMapping("/driver/user/{userId}")
-    public Driver getStudentByUserId(@PathVariable String userId)
+    public Driver getDriverByUserId(@PathVariable String userId)
     {
         return driverServices.getRiderByUserId(userId);
     }
