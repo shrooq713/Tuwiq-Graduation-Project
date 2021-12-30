@@ -2,9 +2,17 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { setToken, setUser } from "../reducers/User/User";
 
 function SignIn() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => {
+    return {
+      token: state.User.token,
+    };
+  });
   const signInClicked = () => {
     const data = {
       userName,
@@ -18,16 +26,27 @@ function SignIn() {
         console.log(res.data);
         const token = res.data.access_token;
         const decode = jwt_decode(token);
-        if(decode.roles[0]==='Rider'){
-          navigate("/rider");
-        }else if(decode.roles[0]==='Driver'){
-          navigate("/driver");
-          console.log("Driver");
-        }
+
+        const config = {
+          headers: { Authorization: `Bearer ${state.token}` },
+        };
+
+        // add user to redux
+        console.log(decode);
+        const action = setUser({
+          id: decode.id,
+          userName: decode.sub,
+        });
+        dispatch(action);
+
+        const action_token = setToken({ token });
+        dispatch(action_token);
+
       })
       .catch((err) => {
         console.log("Error::");
         console.log(err);
+        console.log("UserName or password is not correct!");
       });
     // navigate("/rider");
   };

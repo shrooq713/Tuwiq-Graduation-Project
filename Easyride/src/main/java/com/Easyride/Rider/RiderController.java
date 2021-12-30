@@ -41,4 +41,6 @@ public class RiderController {
     public Rider deleteRider(@PathVariable String id){
         return riderServices.deleteRider(id);
     }
+
+    
 }
