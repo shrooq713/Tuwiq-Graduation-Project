@@ -12,46 +12,53 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
-
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        User user = userRepository.findByUserName(userName);
-        if(user  == null){
-            throw new UsernameNotFoundException("User not found in the database");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user= userRepository.findByUserName(username);
+        System.out.println("USER");
+        System.out.println(user);
+        if(user == null){
+            System.out.println("user does not exist");
+            throw new UsernameNotFoundException("user does not exist");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        user.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
-        return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), authorities);
-    }
-    public User getUser(String id) {
-        Long user_id = Long.parseLong(id);
-        return userRepository.findById(user_id).orElse(null);
+        System.out.println("user role");
+        System.out.println(user.getRole());
+        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+
+
+        return new org.springframework.security.core.userdetails.User(user.getUserName(),user.getPassword(),authorities);
     }
 
-    public User register(Form form){
-        User user = form.getUser();
-        Long role_id = form.getRole_id();
-        Role role = roleRepository.findById(role_id).orElse(null);
-        user.getRoles().add(role);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public List<User> getUsers(){
+        return userRepository.findAll();
+    }
 
-        return userRepository.save(user);
+    public User createUser(User user){
+        if(userRepository.findByUserName(user.getUserName()) == null){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);}
+        else{
+            return null;
+        }
+    }
+
+    public void updateUser(String id){
+        long longId = Long.parseLong(id);
+        User user = userRepository.findById(longId).orElse(null);
+        userRepository.save(user);
     }
 }
