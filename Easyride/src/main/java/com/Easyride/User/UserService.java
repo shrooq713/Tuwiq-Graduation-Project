@@ -1,7 +1,5 @@
 package com.Easyride.User;
 
-import com.Easyride.Role.Role;
-import com.Easyride.Role.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,15 +26,11 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user= userRepository.findByUserName(username);
-        System.out.println("USER");
-        System.out.println(user);
         if(user == null){
             System.out.println("user does not exist");
             throw new UsernameNotFoundException("user does not exist");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        System.out.println("user role");
-        System.out.println(user.getRole());
         authorities.add(new SimpleGrantedAuthority(user.getRole()));
 
 
