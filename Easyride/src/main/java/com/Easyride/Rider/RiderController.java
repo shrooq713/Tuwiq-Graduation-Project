@@ -28,7 +28,6 @@ public class RiderController {
 
     @PostMapping
     public Rider addRider(@RequestBody Rider rider){
-        System.out.println("inside post");
         return riderServices.addRider(rider);
     }
 
