@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name="Rider")
+@Table(name="rider")
 @Data
 @RequiredArgsConstructor
 public class Rider {
@@ -38,7 +38,7 @@ public class Rider {
             cascade = CascadeType.ALL)
     private List<Trip> trip;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "user_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;

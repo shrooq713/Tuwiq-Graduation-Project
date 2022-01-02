@@ -16,7 +16,7 @@ function App() {
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/SignUpDriver" element={<SignUpDriver />} />
             <Route path="/rider" element={<Rider />} />
-            <Route path="/driver/Map" element={<DriverMap />} />
+            <Route path="/driver" element={<DriverMap />} />
           </Routes>
         </div>
       </BrowserRouter>

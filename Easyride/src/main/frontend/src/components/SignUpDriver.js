@@ -1,9 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { setToken, setUser } from "../reducers/User/User";
+import { useDispatch } from "react-redux";
 
 function SignUpDriver() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [driverUserName, setDriverUserName] = useState("");
   const [driverFName, setDriverFName] = useState("");
@@ -17,21 +20,76 @@ function SignUpDriver() {
 
   const signUpClicked = () => {
     console.log("signUpClicked");
-    axios
-      .post("http://localhost:8084/driver", {
-        id: driverUserName,
-        firstName: driverFName,
-        lastName: driverLName,
+    // axios
+    //   .post("http://localhost:8084/driver", {
+    //     id: driverUserName,
+    //     firstName: driverFName,
+    //     lastName: driverLName,
+    //     password: driverPassword,
+    //     phoneNumber: driverPhone,
+    //     email: driverEmail,
+    //     carName: driverCarName,
+    //     carType: driverCarType,
+    //     licenses_plate: driverLicensesPlate,
+    //   })
+    //   .then(function (response) {
+    //     console.log(response);
+    //     navigate("/driver/Map");
+    //   });  
+      let user = {
+        userName: driverUserName,
         password: driverPassword,
-        phoneNumber: driverPhone,
-        email: driverEmail,
-        carName: driverCarName,
-        carType: driverCarType,
-        licenses_plate: driverLicensesPlate,
-      })
+        role: "Driver",
+      };
+      axios.post("http://localhost:8080/users", user)
       .then(function (response) {
-        console.log(response);
-        navigate("/driver/Map");
+        console.log(response.data);
+        if (response.data == null) {
+          console.log("UserName exist! please choose unique userName");
+        } else {
+          let driver = {
+            id: driverUserName,
+            firstName: driverFName,
+            lastName: driverLName,
+            password: driverPassword,
+            phoneNumber: driverPhone,
+            email: driverEmail,
+            carName: driverCarName,
+            carType: driverCarType,
+            licenses_plate: driverLicensesPlate,
+
+            user: {id:response.data.id}
+          };
+          axios
+            .post("http://localhost:8080/driver", driver)
+            .then(function (response) {
+              console.log(response.data);
+              if (response.data === null) {
+                console.log("email exist! please choose unique userName");
+              } else {
+                const action = setUser(driver);
+                dispatch(action);
+                user = { userName: driverUserName, password: driverPassword };
+                axios
+                  .post("http://localhost:8080/login", user)
+                  .then(function (response) {
+                    console.log(response.data);
+                    const token = response.data.access_token;
+                    const action_token = setToken(token);
+                    console.log("token");
+                    console.log(token);
+                    dispatch(action_token);
+                    navigate("/rider");
+                  })
+                  .catch(function (error) {
+                    console.error(error);
+                  });
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        }
       });
   };
 

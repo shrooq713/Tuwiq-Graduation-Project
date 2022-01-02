@@ -26,64 +26,48 @@ function SignIn() {
         console.log(response.data);
         const token = response.data.access_token;
         const decode = jwt_decode(token);
+        console.log(token);
 
         const config = {
-          headers: { Authorization: `Bearer ${state.token}` },
+          headers: { Authorization: `Bearer ${token}` },
         };
-
-        // add user to redux
-        console.log(decode);
-
-        console.log("token");
-        console.log(token);
-        // const action = setUser({
-        //   id: decode.id,
-        //   userName: decode.sub,
-        // });
-        // dispatch(action);
 
         const action_token = setToken({ token });
         dispatch(action_token);
 
-        // if (decode.roles[0] === "Rider") {
-        //   console.log("inside rider");
-        //   axios
-        //     .get(`http://localhost:8080/rider/rider/user/${decode.id}`, config)
-        //     .then(function (response) {
-        //       const action = setUser(response.data);
-        //       dispatch(action);
-        //       console.log(response.data);
-        //     })
-        //     .catch(function (error) {
-        //       console.error(error);
-        //     });
-        //   navigate("/rider");
-        // }
-        // else if (decode.roles[0] === "Driver") {
-        //   // get the student using the login user id
-        //   axios
-        //     .get(
-        //       `http://localhost:8080/driver/driver/user/${decode.id}`,
-        //       config
-        //     )
-        //     .then(function (response) {
-        //       const action2 = setUser(response.data);
-        //       dispatch(action2);
-        //       console.log(response.data);
-        //     })
-        //     .catch(function (error) {
-        //       console.error(error);
-        //     });
-        //   navigate("/driver");
-        //   console.log("Driver");
-        // }
+        if (decode.roles[0] === "Rider") {
+          console.log("inside rider");
+          axios
+            .get(`http://localhost:8080/rider/rider1`, config)
+            .then(function (response) {
+              const action = setUser(response.data);
+              dispatch(action);
+              console.log(response.data);
+              navigate("/rider");
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+        } else if (decode.roles[0] === "Driver") {
+          axios
+            .get(`http://localhost:8080/driver/${decode.sub}`, config)
+            .then(function (response) {
+              const action2 = setUser(response.data);
+              dispatch(action2);
+              console.log(response.data);
+              navigate("/driver");
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+          console.log("Driver");
+        }
       })
       .catch((err) => {
         console.log("Error::");
         console.log(err);
         console.log("UserName or password is not correct!");
       });
-    // navigate("/rider");
   };
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");

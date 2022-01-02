@@ -2,12 +2,8 @@ package com.Easyride.User;
 
 import com.Easyride.Driver.Driver;
 import com.Easyride.Rider.Rider;
-import com.Easyride.Role.Role;
 import lombok.Data;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table
@@ -19,14 +15,12 @@ public class User {
     @Column(unique = true)
     private String userName;
     private String password;
+    private String role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Rider> riders = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Rider rider;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Driver> drivers = new ArrayList<>();
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles = new ArrayList<>();
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Driver driver;
 
 }

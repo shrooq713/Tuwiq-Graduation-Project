@@ -24,16 +24,15 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private final AuthenticationManager authenticationManager;
-    private final UserRepository userRepository;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository){
+public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final AuthenticationManager authenticationManager;
+
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager ){
         this.authenticationManager = authenticationManager;
-        this.userRepository = userRepository;
     }
 
-    //Authenticate
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
@@ -47,26 +46,18 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         }
 
         // User information that will be used to authenticate
-        String userName = user.getUserName();
+        String username = user.getUserName();
         String password = user.getPassword();
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userName,password);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(authenticationToken);
     }
 
-    //Create JWT
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User)authentication.getPrincipal();
-
-        com.Easyride.User.User dbUser = userRepository.findByUserName(user.getUsername());
-        Map<String, String> payload = new HashMap<>();
-        payload.put("id",dbUser.getId().toString());
-
-
         Algorithm algorithm = Algorithm.HMAC256("jwt_super_secret".getBytes());
         String access_token = JWT.create()
                 .withSubject(user.getUsername())
-                .withPayload(payload)
                 .withExpiresAt(new Date(System.currentTimeMillis() + 480 * 60 * 1000))
                 .withIssuer(request.getRequestURI().toString())
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
@@ -76,4 +67,5 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         response.setContentType(APPLICATION_JSON_VALUE);
         new ObjectMapper().writeValue(response.getOutputStream(), token);
     }
+
 }

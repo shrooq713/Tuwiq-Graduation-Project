@@ -18,56 +18,56 @@ function SignUp() {
     console.log("signUpClicked");
 
     let user = {
-      user: {
-        userName: riderUserName,
-        password: riderPassword,
-      },
-      role_id: 9,
+      userName: riderUserName,
+      password: riderPassword,
+      role: "Rider",
     };
-    // axios.post("http://localhost:8080/users", user).then(function (response) {
-    //   console.log(response.data);
-    //   if (response.data == null) {
-    //     console.log("UserName exist! please choose unique userName");
-    //   } else {
-    //     let rider = {
-    //       id: riderUserName,
-    //       firstName: riderFName,
-    //       lastName: riderLName,
-    //       password: riderPassword,
-    //       phoneNumber: riderPhone,
-    //       email: riderEmail,
-    //     };
-    //     axios
-    //       .post("http://localhost:8080/rider", rider)
-    //       .then(function (response) {
-    //         console.log(response.data);
-    //         if (response.data === null) {
-    //           console.log("email exist! please choose unique userName");
-    //         } else {
-    //           const action = setUser(rider);
-    //           dispatch(action);
-    //           user = { username: riderUserName, password: riderPassword };
-    //           axios
-    //             .post("http://localhost:8080/login", user)
-    //             .then(function (response) {
-    //               console.log(response.data);
-    //               const token = response.data.access_token;
-    //               const action_token = setToken(token);
-    //               dispatch(action_token);
-    //               navigate("/rider");
-    //             })
-    //             .catch(function (error) {
-    //               console.error(error);
-    //             });
-    //         }
-    //       })
-    //       .catch(function (error) {
-    //         console.error(error);
-    //       });
-    // }
-    // console.log(response);
-    // navigate("/rider");
-    // });
+    axios.post("http://localhost:8080/users", user)
+    .then(function (response) {
+      console.log(response.data);
+      if (response.data == null) {
+        console.log("UserName exist! please choose unique userName");
+      } else {
+        let rider = {
+          id: riderUserName,
+          firstName: riderFName,
+          lastName: riderLName,
+          password: riderPassword,
+          phoneNumber: riderPhone,
+          email: riderEmail,
+          user: {id:response.data.id}
+        };
+        axios
+          .post("http://localhost:8080/rider", rider)
+          .then(function (response) {
+            console.log(response.data);
+            if (response.data === null) {
+              console.log("email exist! please choose unique userName");
+            } else {
+              const action = setUser(rider);
+              dispatch(action);
+              user = { userName: riderUserName, password: riderPassword };
+              axios
+                .post("http://localhost:8080/login", user)
+                .then(function (response) {
+                  console.log(response.data);
+                  const token = response.data.access_token;
+                  const action_token = setToken(token);
+                  console.log("token");
+                  console.log(token);
+                  dispatch(action_token);
+                  navigate("/rider");
+                })
+                .catch(function (error) {
+                  console.error(error);
+                });
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    });
   };
   return (
     <div className="align container h-100">

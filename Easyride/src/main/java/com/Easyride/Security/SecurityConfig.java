@@ -5,6 +5,7 @@ import com.Easyride.Filter.CustomAuthorizationFilter;
 import com.Easyride.User.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,12 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final UserRepository userRepository;
 
-    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder, UserRepository userRepository) {
+    public SecurityConfig(UserDetailsService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userDetailsService = userDetailsService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.userRepository = userRepository;
     }
 
 
@@ -43,28 +42,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean(), userRepository);
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
         customAuthenticationFilter.setFilterProcessesUrl("/login");
+        http.cors().and().csrf().disable();
         http.cors().configurationSource(request -> {
             var cors = new CorsConfiguration();
             cors.setAllowedOrigins(List.of("*"));
             cors.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
             cors.setAllowedHeaders(List.of("*"));
             return cors;});
-        http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Define the authorization patterns below
-        http.authorizeRequests().antMatchers(POST, "/login/**").permitAll();
-        http.authorizeRequests().antMatchers(POST,"/users").permitAll();
-        http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
-        http.authorizeRequests().antMatchers(POST,"/roles/").permitAll();
-        http.authorizeRequests().antMatchers(POST,"/rider/").permitAll();
-        http.authorizeRequests().antMatchers( GET,"/driver/**").hasAnyAuthority("Driver");
-        http.authorizeRequests().antMatchers( GET,"/rider/**").hasAnyAuthority("Rider");
+//        http.authorizeRequests().anyRequest().permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/login").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/users").permitAll();
+        http.authorizeRequests().antMatchers( HttpMethod.GET,"/driver").hasAnyAuthority("Driver");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/driver").permitAll();
+//        http.authorizeRequests().antMatchers( HttpMethod.GET,"/rider").hasAnyAuthority("rider");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/rider").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/rider/**").hasAnyAuthority("Rider");
+//        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{
