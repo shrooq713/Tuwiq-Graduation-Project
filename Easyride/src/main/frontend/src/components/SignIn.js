@@ -43,11 +43,11 @@ function SignIn() {
               const action = setUser(response.data);
               dispatch(action);
               console.log(response.data);
+              navigate("/rider");
             })
             .catch(function (error) {
               console.error(error);
             });
-          // navigate("/rider");
         } else if (decode.roles[0] === "Driver") {
           axios
             .get(`http://localhost:8080/driver/${decode.sub}`, config)
@@ -55,11 +55,11 @@ function SignIn() {
               const action2 = setUser(response.data);
               dispatch(action2);
               console.log(response.data);
+              navigate("/driver");
             })
             .catch(function (error) {
               console.error(error);
             });
-          // navigate("/driver");
           console.log("Driver");
         }
       })

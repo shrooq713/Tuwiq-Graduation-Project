@@ -58,7 +58,6 @@ function SignUp() {
                   dispatch(action_token);
                   navigate("/rider");
                 })
-                // shroooq98  24
                 .catch(function (error) {
                   console.error(error);
                 });
@@ -68,8 +67,6 @@ function SignUp() {
             console.error(error);
           });
       }
-      console.log(response);
-      navigate("/rider");
     });
   };
   return (
