@@ -1,6 +1,5 @@
 package com.Easyride.Rider;
 
-import com.Easyride.Driver.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,9 +41,7 @@ public class RiderController {
     }
 
     @GetMapping("/rider/user/{userId}")
-    public Rider getRiderByUserId(@PathVariable String userId)
-    {
-        Rider r =  riderServices.getRiderByUserId(userId);
-        return r;
+    public Rider getRiderByUserId(@PathVariable String userId){
+        return riderServices.getRiderByUserId(userId);
     }
 }

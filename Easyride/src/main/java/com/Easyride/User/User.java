@@ -18,9 +18,9 @@ public class User {
     private String role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Rider riders;
+    private Rider rider;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Driver drivers;
+    private Driver driver;
 
 }

@@ -22,7 +22,8 @@ function SignUp() {
       password: riderPassword,
       role: "Rider",
     };
-    axios.post("http://localhost:8080/users", user).then(function (response) {
+    axios.post("http://localhost:8080/users", user)
+    .then(function (response) {
       console.log(response.data);
       if (response.data == null) {
         console.log("UserName exist! please choose unique userName");
@@ -45,16 +46,19 @@ function SignUp() {
             } else {
               const action = setUser(rider);
               dispatch(action);
-              user = { username: riderUserName, password: riderPassword };
+              user = { userName: riderUserName, password: riderPassword };
               axios
                 .post("http://localhost:8080/login", user)
                 .then(function (response) {
                   console.log(response.data);
                   const token = response.data.access_token;
                   const action_token = setToken(token);
+                  console.log("token");
+                  console.log(token);
                   dispatch(action_token);
                   navigate("/rider");
                 })
+                // shroooq98  24
                 .catch(function (error) {
                   console.error(error);
                 });

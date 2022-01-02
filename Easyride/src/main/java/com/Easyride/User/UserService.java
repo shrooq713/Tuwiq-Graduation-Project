@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,9 +42,15 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public User getUserByUserName(String userName){
+        return userRepository.findByUserName(userName);
+    }
+
     public User createUser(User user){
         if(userRepository.findByUserName(user.getUserName()) == null){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            System.out.println("user");
+            System.out.println(user);
             return userRepository.save(user);}
         else{
             return null;

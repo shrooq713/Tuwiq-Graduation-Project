@@ -56,10 +56,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.authorizeRequests().anyRequest().permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/login").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST, "/users").permitAll();
-        http.authorizeRequests().antMatchers( HttpMethod.GET,"/driver").hasAnyAuthority("driver");
+        http.authorizeRequests().antMatchers( HttpMethod.GET,"/driver").hasAnyAuthority("Driver");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/driver").permitAll();
-        http.authorizeRequests().antMatchers( HttpMethod.GET,"/rider").hasAnyAuthority("rider");
+//        http.authorizeRequests().antMatchers( HttpMethod.GET,"/rider").hasAnyAuthority("rider");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/rider").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.GET,"/rider/**").hasAnyAuthority("Rider");
 //        http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

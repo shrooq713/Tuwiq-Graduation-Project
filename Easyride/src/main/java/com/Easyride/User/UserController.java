@@ -20,6 +20,13 @@ public class UserController {
         return userService.getUsers();
     }
 
+    @GetMapping("/{userName}")
+    public User getUser(@PathVariable String userName){
+        System.out.println("userName");
+        System.out.println(userName);
+        return userService.getUserByUserName(userName);
+    }
+
     @PostMapping
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
