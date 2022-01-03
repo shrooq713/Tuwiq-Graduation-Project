@@ -35,27 +35,21 @@ function SignIn() {
     axios
       .post("http://localhost:8080/login", data)
       .then((response) => {
-        console.log("Data::");
-        console.log(response.data);
         const token = response.data.access_token;
         const decode = jwt_decode(token);
-        console.log(token);
-
-        const config = {
-          headers: { Authorization: `Bearer ${token}` },
-        };
-
         const action_token = setToken({ token });
         dispatch(action_token);
 
+        const config = {
+          headers: { Authorization: `Bearer ${state.token}` },
+        };
+
         if (decode.roles[0] === "Rider") {
-          console.log("inside rider");
           axios
             .get(`http://localhost:8080/rider/rider1`, config)
             .then(function (response) {
               const action = setUser(response.data);
               dispatch(action);
-              console.log(response.data);
               navigate("/rider");
             })
             .catch(function (error) {
@@ -67,19 +61,15 @@ function SignIn() {
             .then(function (response) {
               const action2 = setUser(response.data);
               dispatch(action2);
-              console.log(response.data);
               navigate("/driver");
             })
             .catch(function (error) {
               console.error(error);
             });
-          console.log("Driver");
         }
       })
       .catch((err) => {
-        console.log("Error::");
         console.log(err);
-        console.log("UserName or password is not correct!");
         setWorning("Username or password is not correct!");
       });
   };
