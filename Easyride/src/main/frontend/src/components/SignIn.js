@@ -9,12 +9,24 @@ import image from "../Images/logo1.png";
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [worning, setWorning] = useState("");
+
   const state = useSelector((state) => {
     return {
       token: state.User.token,
     };
   });
   const signInClicked = () => {
+    if(userName===""){
+      setWorning("Please enter username");
+      return ;
+    }else if(password===""){
+      setWorning("Please enter password");
+      return ;
+    }
+
     const data = {
       userName,
       password,
@@ -68,10 +80,9 @@ function SignIn() {
         console.log("Error::");
         console.log(err);
         console.log("UserName or password is not correct!");
+        setWorning("Username or password is not correct!");
       });
   };
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
 
   return (
     <div className="align container h-100">
@@ -81,8 +92,8 @@ function SignIn() {
             <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
-            <form>
               <h1 className="SignHeader">Sign In</h1>
+            <form>
               <div className="flexForm">
                 <div>
                   <label>User Name: </label>
@@ -95,6 +106,7 @@ function SignIn() {
                     required
                     onChange={(e) => {
                       setUserName(e.target.value);
+                      setWorning("");
                     }}
                   />
                 </div>
@@ -109,6 +121,7 @@ function SignIn() {
                     required
                     onChange={(e) => {
                       setPassword(e.target.value);
+                      setWorning("");
                     }}
                   />
                 </div>
@@ -125,6 +138,9 @@ function SignIn() {
               >
                 Sign In
               </button>
+            </div>
+            <div className="Worning">
+              {worning}
             </div>
             <div className="Link_container">
               <div>
