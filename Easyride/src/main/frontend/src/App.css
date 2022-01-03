@@ -107,10 +107,28 @@ body {
 }
 .align {
   margin-left: 35%;
-  margin-top: 8rem;
+  margin-top: 5rem;
 }
 .user_card_signUp {
   height: 600px;
+  width: 350px;
+  margin-top: auto;
+  margin-bottom: auto;
+  background: #ee8869;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+  0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+  0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+.user_card_signUp_driver {
+  height: 690px;
   width: 350px;
   margin-top: auto;
   margin-bottom: auto;
@@ -198,7 +216,7 @@ body {
   background-color: #c0392b !important;
 }
 .form {
-  margin-top: 40%;
+  margin-top: 30%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -206,7 +224,7 @@ body {
 }
 
 .SignHeader {
-  margin-top: 22%;
+  margin-top: 20%;
 }
 .flexForm {
   display: flex;
@@ -225,29 +243,28 @@ body {
   row-gap: 5px;
   flex-direction: column;
 }
-.user_card_signUp_driver {
-  height: 750px;
-  width: 350px;
-  margin-top: auto;
-  margin-bottom: auto;
-  background: #ee8869;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 5px;
-}
 
 
 .Worning{
   color: rgb(216, 27, 27);
   margin-top: 1.5%;
   margin-bottom: 1%;
+  position: fixed;
+}
+.Worning_driver{
+  color: rgb(216, 27, 27);
+  position: fixed;
+  margin-top: 5%;
+}
+.align_text{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 30%;
+  align-items: center;
+  position: absolute;
+}
+.Link_cont{
+  margin-top: 8%;
   position: fixed;
 }

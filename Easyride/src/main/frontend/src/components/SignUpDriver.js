@@ -8,7 +8,7 @@ import image from "../Images/logo1.png";
 function SignUpDriver() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [worning, setWorning] = useState("");
   const [form, setForm] = useState({
     id: "",
     firstName: "",
@@ -23,6 +23,13 @@ function SignUpDriver() {
   });
 
   const signUpClicked = () => {
+    if (form.id === "") {
+      setWorning("Please enter username");
+      return;
+    } else if (form.password === "") {
+      setWorning("Please enter password");
+      return;
+    }
     let user = {
       userName: form.id,
       password: form.password,
@@ -67,15 +74,15 @@ function SignUpDriver() {
   };
 
   return (
-    <div className="align container h-100">
+    <div className="align container">
       <div className="">
         <div className="user_card_signUp_driver">
           <div className="brand_logo_container">
             <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
+            <h1 className="SignHeader">Sign Up</h1>
             <form>
-              <h1 className="SignHeader">Sign Up</h1>
               <div className="flexForm">
                 <div>
                   <label>Driver Name: </label>
@@ -239,11 +246,12 @@ function SignUpDriver() {
                 Sign up
               </button>
             </div>
-            <div className="Link_container">
-              <div>
-                Already have an account?
-                <Link to="/signIn">Sign In</Link>
-              </div>
+            {/* <div className="align_text"> */}
+            <div className="Worning_driver">{worning}</div>
+            <div className="Link_cont">
+              Already have an account?
+              <Link to="/signIn">Sign In</Link>
+              {/* </div> */}
             </div>
           </div>
         </div>

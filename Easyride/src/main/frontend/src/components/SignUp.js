@@ -8,7 +8,7 @@ import image from "../Images/logo1.png";
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [worning, setWorning] = useState("");
   const [form, setForm] = useState({
     id: "",
     firstName: "",
@@ -19,6 +19,13 @@ function SignUp() {
     user: {},
   });
   const signUpClicked = () => {
+    if (form.id === "") {
+      setWorning("Please enter username");
+      return;
+    } else if (form.password === "") {
+      setWorning("Please enter password");
+      return;
+    }
     let user = {
       userName: form.id,
       password: form.password,
@@ -186,6 +193,7 @@ function SignUp() {
                 Sign up
               </button>
             </div>
+            <div className="Worning">{worning}</div>
             <div className="Link_container">
               <div>
                 Already have an account?
