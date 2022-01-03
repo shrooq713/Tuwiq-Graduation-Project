@@ -114,10 +114,6 @@ export default function Rider() {
         if (status === window.google.maps.DirectionsStatus.OK) {
           //changing the state of directions to the result of direction service
           setDirections(result);
-          // console.log("result");
-          // console.log(result);
-          // console.log(result.routes[0].legs[0].distance.text);
-          // console.log(result.routes[0].legs[0].duration.text);
         } else {
           console.error(`error fetching directions ${result}`);
         }
