@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/User/User";
 import { useDispatch } from "react-redux";
+import image from "../Images/logo1.png";
+
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -69,7 +71,7 @@ function SignUp() {
         <div className="user_card_signUp">
           <div className="brand_logo_container">
             <img
-              src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
+              src={image}
               className="brand_logo"
               alt="Logo"
             />

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { useDispatch, useSelector } from "react-redux";
 import { setToken, setUser } from "../reducers/User/User";
+import image from "../Images/logo1.png";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -77,11 +78,7 @@ function SignIn() {
       <div className="">
         <div className="user_card">
           <div className="brand_logo_container">
-            <img
-              src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
-              className="brand_logo"
-              alt="Logo"
-            />
+            <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
             <form>

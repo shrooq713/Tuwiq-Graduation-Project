@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/User/User";
 import { useDispatch } from "react-redux";
+import image from "../Images/logo1.png";
 
 function SignUpDriver() {
   const navigate = useNavigate();
@@ -20,77 +21,60 @@ function SignUpDriver() {
 
   const signUpClicked = () => {
     console.log("signUpClicked");
-    // axios
-    //   .post("http://localhost:8084/driver", {
-    //     id: driverUserName,
-    //     firstName: driverFName,
-    //     lastName: driverLName,
-    //     password: driverPassword,
-    //     phoneNumber: driverPhone,
-    //     email: driverEmail,
-    //     carName: driverCarName,
-    //     carType: driverCarType,
-    //     licenses_plate: driverLicensesPlate,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //     navigate("/driver/Map");
-    //   });  
-      let user = {
-        userName: driverUserName,
-        password: driverPassword,
-        role: "Driver",
-      };
-      axios.post("http://localhost:8080/users", user)
-      .then(function (response) {
-        console.log(response.data);
-        if (response.data == null) {
-          console.log("UserName exist! please choose unique userName");
-        } else {
-          let driver = {
-            id: driverUserName,
-            firstName: driverFName,
-            lastName: driverLName,
-            password: driverPassword,
-            phoneNumber: driverPhone,
-            email: driverEmail,
-            carName: driverCarName,
-            carType: driverCarType,
-            licenses_plate: driverLicensesPlate,
+    let user = {
+      userName: driverUserName,
+      password: driverPassword,
+      role: "Driver",
+    };
+    axios.post("http://localhost:8080/users", user).then(function (response) {
+      console.log(response.data);
+      if (response.data == null) {
+        console.log("UserName exist! please choose unique userName");
+      } else {
+        let driver = {
+          id: driverUserName,
+          firstName: driverFName,
+          lastName: driverLName,
+          password: driverPassword,
+          phoneNumber: driverPhone,
+          email: driverEmail,
+          carName: driverCarName,
+          carType: driverCarType,
+          licenses_plate: driverLicensesPlate,
 
-            user: {id:response.data.id}
-          };
-          axios
-            .post("http://localhost:8080/driver", driver)
-            .then(function (response) {
-              console.log(response.data);
-              if (response.data === null) {
-                console.log("email exist! please choose unique userName");
-              } else {
-                const action = setUser(driver);
-                dispatch(action);
-                user = { userName: driverUserName, password: driverPassword };
-                axios
-                  .post("http://localhost:8080/login", user)
-                  .then(function (response) {
-                    console.log(response.data);
-                    const token = response.data.access_token;
-                    const action_token = setToken(token);
-                    console.log("token");
-                    console.log(token);
-                    dispatch(action_token);
-                    navigate("/rider");
-                  })
-                  .catch(function (error) {
-                    console.error(error);
-                  });
-              }
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        }
-      });
+          user: { id: response.data.id },
+        };
+        axios
+          .post("http://localhost:8080/driver", driver)
+          .then(function (response) {
+            console.log(response.data);
+            if (response.data === null) {
+              console.log("email exist! please choose unique userName");
+            } else {
+              const action = setUser(driver);
+              dispatch(action);
+              user = { userName: driverUserName, password: driverPassword };
+              axios
+                .post("http://localhost:8080/login", user)
+                .then(function (response) {
+                  console.log(response.data);
+                  const token = response.data.access_token;
+                  const action_token = setToken(token);
+                  console.log("token");
+                  console.log(token);
+                  dispatch(action_token);
+                  navigate("/rider");
+                })
+                .catch(function (error) {
+                  console.error(error);
+                });
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    });
   };
 
   return (
@@ -98,11 +82,7 @@ function SignUpDriver() {
       <div className="">
         <div className="user_card_signUp_driver">
           <div className="brand_logo_container">
-            <img
-              src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
-              className="brand_logo"
-              alt="Logo"
-            />
+            <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
             <form>
