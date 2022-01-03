@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/User/User";
 import { useDispatch } from "react-redux";
@@ -15,15 +15,12 @@ function SignUp() {
   const [riderPhone, setRiderPhone] = useState("");
 
   const signUpClicked = () => {
-    console.log("signUpClicked");
-
     let user = {
       userName: riderUserName,
       password: riderPassword,
       role: "Rider",
     };
-    axios.post("http://localhost:8080/users", user)
-    .then(function (response) {
+    axios.post("http://localhost:8080/users", user).then(function (response) {
       console.log(response.data);
       if (response.data == null) {
         console.log("UserName exist! please choose unique userName");
@@ -35,7 +32,7 @@ function SignUp() {
           password: riderPassword,
           phoneNumber: riderPhone,
           email: riderEmail,
-          user: {id:response.data.id}
+          user: { id: response.data.id },
         };
         axios
           .post("http://localhost:8080/rider", rider)
@@ -50,11 +47,8 @@ function SignUp() {
               axios
                 .post("http://localhost:8080/login", user)
                 .then(function (response) {
-                  console.log(response.data);
                   const token = response.data.access_token;
                   const action_token = setToken(token);
-                  console.log("token");
-                  console.log(token);
                   dispatch(action_token);
                   navigate("/rider");
                 })
