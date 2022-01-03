@@ -2,51 +2,43 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../reducers/User/User";
 import image from "../Images/logo1.png";
 
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
   const [worning, setWorning] = useState("");
-
-  const state = useSelector((state) => {
-    return {
-      token: state.User.token,
-    };
+  const [form, setForm] = useState({
+    userName: "",
+    password: "",
   });
   const signInClicked = () => {
-    if(userName===""){
+    if (form.userName === "") {
       setWorning("Please enter username");
-      return ;
-    }else if(password===""){
+      return;
+    } else if (form.password === "") {
       setWorning("Please enter password");
-      return ;
+      return;
     }
 
-    const data = {
-      userName,
-      password,
-    };
-
     axios
-      .post("http://localhost:8080/login", data)
+      .post("http://localhost:8080/login", form)
       .then((response) => {
         const token = response.data.access_token;
         const decode = jwt_decode(token);
         const action_token = setToken({ token });
         dispatch(action_token);
+        console.log(token);
 
         const config = {
-          headers: { Authorization: `Bearer ${state.token}` },
+          headers: { Authorization: `Bearer ${token}` },
         };
 
         if (decode.roles[0] === "Rider") {
           axios
-            .get(`http://localhost:8080/rider/rider1`, config)
+            .get(`http://localhost:8080/rider/${decode.sub}`, config)
             .then(function (response) {
               const action = setUser(response.data);
               dispatch(action);
@@ -82,7 +74,7 @@ function SignIn() {
             <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
-              <h1 className="SignHeader">Sign In</h1>
+            <h1 className="SignHeader">Sign In</h1>
             <form>
               <div className="flexForm">
                 <div>
@@ -95,7 +87,10 @@ function SignIn() {
                     placeholder="user name"
                     required
                     onChange={(e) => {
-                      setUserName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        userName: e.target.value,
+                      }));
                       setWorning("");
                     }}
                   />
@@ -110,7 +105,10 @@ function SignIn() {
                     placeholder="password"
                     required
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        password: e.target.value,
+                      }));
                       setWorning("");
                     }}
                   />
@@ -129,9 +127,7 @@ function SignIn() {
                 Sign In
               </button>
             </div>
-            <div className="Worning">
-              {worning}
-            </div>
+            <div className="Worning">{worning}</div>
             <div className="Link_container">
               <div>
                 Don't have an account?
