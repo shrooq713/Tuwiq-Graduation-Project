@@ -12,6 +12,8 @@ import SearchPickUp from "./SearchPickUp";
 import SearchDropIn from "./SearchDropIn";
 import PinDropIn from "./PinDropIn";
 import PinPickUp from "./PinPickUp";
+import image from "../Images/logo1.png";
+
 const libraries = ["places", "directions"];
 
 const mapContainerStyle = {
@@ -125,7 +127,8 @@ export default function Rider() {
     <div>
       <img
         className="icon"
-        src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
+        src={image}
+        alt = "Logo"
       />
       <h1>
         <span role="img" aria-label="tent">

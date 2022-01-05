@@ -3,110 +3,86 @@ import { useState } from "react";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/User/User";
 import { useDispatch } from "react-redux";
+import image from "../Images/logo1.png";
 
 function SignUpDriver() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [driverUserName, setDriverUserName] = useState("");
-  const [driverFName, setDriverFName] = useState("");
-  const [driverLName, setDriverLName] = useState("");
-  const [driverPassword, setDriverPassword] = useState("");
-  const [driverEmail, setDriverEmail] = useState("");
-  const [driverPhone, setDriverPhone] = useState("");
-  const [driverCarName, setDriverCarName] = useState("");
-  const [driverCarType, setDriverCarType] = useState("");
-  const [driverLicensesPlate, setDriverLicensesPlate] = useState("");
+  const [worning, setWorning] = useState("");
+  const [form, setForm] = useState({
+    id: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    phoneNumber: "",
+    email: "",
+    carName: "",
+    carType: "",
+    licenses_plate: "",
+    user: {},
+  });
 
   const signUpClicked = () => {
-    console.log("signUpClicked");
-    // axios
-    //   .post("http://localhost:8084/driver", {
-    //     id: driverUserName,
-    //     firstName: driverFName,
-    //     lastName: driverLName,
-    //     password: driverPassword,
-    //     phoneNumber: driverPhone,
-    //     email: driverEmail,
-    //     carName: driverCarName,
-    //     carType: driverCarType,
-    //     licenses_plate: driverLicensesPlate,
-    //   })
-    //   .then(function (response) {
-    //     console.log(response);
-    //     navigate("/driver/Map");
-    //   });  
-      let user = {
-        userName: driverUserName,
-        password: driverPassword,
-        role: "Driver",
-      };
-      axios.post("http://localhost:8080/users", user)
-      .then(function (response) {
-        console.log(response.data);
-        if (response.data == null) {
-          console.log("UserName exist! please choose unique userName");
-        } else {
-          let driver = {
-            id: driverUserName,
-            firstName: driverFName,
-            lastName: driverLName,
-            password: driverPassword,
-            phoneNumber: driverPhone,
-            email: driverEmail,
-            carName: driverCarName,
-            carType: driverCarType,
-            licenses_plate: driverLicensesPlate,
-
-            user: {id:response.data.id}
-          };
-          axios
-            .post("http://localhost:8080/driver", driver)
-            .then(function (response) {
-              console.log(response.data);
-              if (response.data === null) {
-                console.log("email exist! please choose unique userName");
-              } else {
-                const action = setUser(driver);
-                dispatch(action);
-                user = { userName: driverUserName, password: driverPassword };
-                axios
-                  .post("http://localhost:8080/login", user)
-                  .then(function (response) {
-                    console.log(response.data);
-                    const token = response.data.access_token;
-                    const action_token = setToken(token);
-                    console.log("token");
-                    console.log(token);
-                    dispatch(action_token);
-                    navigate("/rider");
-                  })
-                  .catch(function (error) {
-                    console.error(error);
-                  });
-              }
-            })
-            .catch(function (error) {
-              console.error(error);
-            });
-        }
-      });
+    if (form.id === "") {
+      setWorning("Please enter username");
+      return;
+    } else if (form.password === "") {
+      setWorning("Please enter password");
+      return;
+    }
+    let user = {
+      userName: form.id,
+      password: form.password,
+      role: "Driver",
+    };
+    axios.post("http://localhost:8080/users", user).then(function (response) {
+      if (response.data == null) {
+        console.log("UserName exist! please choose unique userName");
+      } else {
+        setForm((prevState) => ({
+          ...prevState,
+          user: { id: response.data.id },
+        }));
+        axios
+          .post("http://localhost:8080/driver", form)
+          .then(function (response) {
+            if (response.data === null) {
+              console.log("email exist! please choose unique userName");
+            } else {
+              const action = setUser(form);
+              dispatch(action);
+              user = { userName: form.id, password: form.password };
+              axios
+                .post("http://localhost:8080/login", user)
+                .then(function (response) {
+                  const token = response.data.access_token;
+                  const action_token = setToken(token);
+                  console.log(token);
+                  dispatch(action_token);
+                  navigate("/rider");
+                })
+                .catch(function (error) {
+                  console.error(error);
+                });
+            }
+          })
+          .catch(function (error) {
+            console.error(error);
+          });
+      }
+    });
   };
 
   return (
-    <div className="align container h-100">
+    <div className="align container">
       <div className="">
         <div className="user_card_signUp_driver">
           <div className="brand_logo_container">
-            <img
-              src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
-              className="brand_logo"
-              alt="Logo"
-            />
+            <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
+            <h1 className="SignHeader">Sign Up</h1>
             <form>
-              <h1 className="SignHeader">Sign Up</h1>
               <div className="flexForm">
                 <div>
                   <label>Driver Name: </label>
@@ -118,7 +94,10 @@ function SignUpDriver() {
                     placeholder="user name"
                     required
                     onChange={(e) => {
-                      setDriverUserName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        id: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -131,7 +110,10 @@ function SignUpDriver() {
                     className="input-group-text"
                     placeholder="first name"
                     onChange={(e) => {
-                      setDriverFName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        firstName: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -144,7 +126,10 @@ function SignUpDriver() {
                     className="input-group-text"
                     placeholder="last name"
                     onChange={(e) => {
-                      setDriverLName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        lastName: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -158,7 +143,10 @@ function SignUpDriver() {
                     placeholder="emaple@email.com"
                     required
                     onChange={(e) => {
-                      setDriverEmail(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        email: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -172,7 +160,10 @@ function SignUpDriver() {
                     placeholder="050-000-0000"
                     required
                     onChange={(e) => {
-                      setDriverPhone(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        phoneNumber: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -186,7 +177,10 @@ function SignUpDriver() {
                     placeholder="password"
                     required
                     onChange={(e) => {
-                      setDriverPassword(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        password: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -199,7 +193,10 @@ function SignUpDriver() {
                     className="input-group-text"
                     placeholder="car name"
                     onChange={(e) => {
-                      setDriverCarName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        carName: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -212,7 +209,10 @@ function SignUpDriver() {
                     className="input-group-text"
                     placeholder="car type"
                     onChange={(e) => {
-                      setDriverCarType(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        carType: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -225,7 +225,10 @@ function SignUpDriver() {
                     className="input-group-text"
                     placeholder="licenses plate"
                     onChange={(e) => {
-                      setDriverLicensesPlate(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        licenses_plate: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -243,11 +246,12 @@ function SignUpDriver() {
                 Sign up
               </button>
             </div>
-            <div className="Link_container">
-              <div>
-                Already have an account?
-                <Link to="/signIn">Sign In</Link>
-              </div>
+            {/* <div className="align_text"> */}
+            <div className="Worning_driver">{worning}</div>
+            <div className="Link_cont">
+              Already have an account?
+              <Link to="/signIn">Sign In</Link>
+              {/* </div> */}
             </div>
           </div>
         </div>

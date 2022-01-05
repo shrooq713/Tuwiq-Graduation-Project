@@ -3,6 +3,7 @@ import { GoogleMap, useLoadScript } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
 import mapStyles from "../mapStyles";
 import DriverCurrentLocation from "./DriverCurrentLocation";
+import image from "../Images/logo1.png";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -40,7 +41,8 @@ function DriverMap() {
     <div>
       <img
         className="icon"
-        src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
+        src={image}
+        alt="Logo"
       />
       <h1>
         <span role="img" aria-label="tent">

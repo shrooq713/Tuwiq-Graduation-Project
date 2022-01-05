@@ -3,21 +3,32 @@ import { useState } from "react";
 import axios from "axios";
 import { setToken, setUser } from "../reducers/User/User";
 import { useDispatch } from "react-redux";
+import image from "../Images/logo1.png";
+
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const [riderUserName, setRiderUserName] = useState("");
-  const [riderFName, setRiderFName] = useState("");
-  const [riderLName, setRiderLName] = useState("");
-  const [riderPassword, setRiderPassowrd] = useState("");
-  const [riderEmail, setRiderEmail] = useState("");
-  const [riderPhone, setRiderPhone] = useState("");
-
+  const [worning, setWorning] = useState("");
+  const [form, setForm] = useState({
+    id: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    phoneNumber: "",
+    email: "",
+    user: {},
+  });
   const signUpClicked = () => {
+    if (form.id === "") {
+      setWorning("Please enter username");
+      return;
+    } else if (form.password === "") {
+      setWorning("Please enter password");
+      return;
+    }
     let user = {
-      userName: riderUserName,
-      password: riderPassword,
+      userName: form.id,
+      password: form.password,
       role: "Rider",
     };
     axios.post("http://localhost:8080/users", user).then(function (response) {
@@ -25,25 +36,19 @@ function SignUp() {
       if (response.data == null) {
         console.log("UserName exist! please choose unique userName");
       } else {
-        let rider = {
-          id: riderUserName,
-          firstName: riderFName,
-          lastName: riderLName,
-          password: riderPassword,
-          phoneNumber: riderPhone,
-          email: riderEmail,
+        setForm((prevState) => ({
+          ...prevState,
           user: { id: response.data.id },
-        };
+        }));
         axios
-          .post("http://localhost:8080/rider", rider)
+          .post("http://localhost:8080/rider", form)
           .then(function (response) {
-            console.log(response.data);
             if (response.data === null) {
               console.log("email exist! please choose unique userName");
             } else {
-              const action = setUser(rider);
+              const action = setUser(form);
               dispatch(action);
-              user = { userName: riderUserName, password: riderPassword };
+              user = { userName: form.id, password: form.password };
               axios
                 .post("http://localhost:8080/login", user)
                 .then(function (response) {
@@ -68,11 +73,7 @@ function SignUp() {
       <div className="">
         <div className="user_card_signUp">
           <div className="brand_logo_container">
-            <img
-              src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
-              className="brand_logo"
-              alt="Logo"
-            />
+            <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
             <form>
@@ -88,7 +89,10 @@ function SignUp() {
                     placeholder="user name"
                     required
                     onChange={(e) => {
-                      setRiderUserName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        id: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -101,7 +105,10 @@ function SignUp() {
                     className="input-group-text"
                     placeholder="first name"
                     onChange={(e) => {
-                      setRiderFName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        firstName: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -114,7 +121,10 @@ function SignUp() {
                     className="input-group-text"
                     placeholder="last name"
                     onChange={(e) => {
-                      setRiderLName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        lastName: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -128,7 +138,10 @@ function SignUp() {
                     placeholder="emaple@email.com"
                     required
                     onChange={(e) => {
-                      setRiderEmail(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        email: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -142,7 +155,10 @@ function SignUp() {
                     placeholder="050-000-0000"
                     required
                     onChange={(e) => {
-                      setRiderPhone(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        phoneNumber: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -156,7 +172,10 @@ function SignUp() {
                     placeholder="password"
                     required
                     onChange={(e) => {
-                      setRiderPassowrd(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        password: e.target.value,
+                      }));
                     }}
                   />
                 </div>
@@ -174,6 +193,7 @@ function SignUp() {
                 Sign up
               </button>
             </div>
+            <div className="Worning">{worning}</div>
             <div className="Link_container">
               <div>
                 Already have an account?

@@ -2,47 +2,46 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../reducers/User/User";
+import image from "../Images/logo1.png";
 
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const state = useSelector((state) => {
-    return {
-      token: state.User.token,
-    };
+  const [worning, setWorning] = useState("");
+  const [form, setForm] = useState({
+    userName: "",
+    password: "",
   });
   const signInClicked = () => {
-    const data = {
-      userName,
-      password,
-    };
+    if (form.userName === "") {
+      setWorning("Please enter username");
+      return;
+    } else if (form.password === "") {
+      setWorning("Please enter password");
+      return;
+    }
 
     axios
-      .post("http://localhost:8080/login", data)
+      .post("http://localhost:8080/login", form)
       .then((response) => {
-        console.log("Data::");
-        console.log(response.data);
         const token = response.data.access_token;
         const decode = jwt_decode(token);
+        const action_token = setToken({ token });
+        dispatch(action_token);
         console.log(token);
 
         const config = {
           headers: { Authorization: `Bearer ${token}` },
         };
 
-        const action_token = setToken({ token });
-        dispatch(action_token);
-
         if (decode.roles[0] === "Rider") {
-          console.log("inside rider");
           axios
-            .get(`http://localhost:8080/rider/rider1`, config)
+            .get(`http://localhost:8080/rider/${decode.sub}`, config)
             .then(function (response) {
               const action = setUser(response.data);
               dispatch(action);
-              console.log(response.data);
               navigate("/rider");
             })
             .catch(function (error) {
@@ -54,38 +53,29 @@ function SignIn() {
             .then(function (response) {
               const action2 = setUser(response.data);
               dispatch(action2);
-              console.log(response.data);
               navigate("/driver");
             })
             .catch(function (error) {
               console.error(error);
             });
-          console.log("Driver");
         }
       })
       .catch((err) => {
-        console.log("Error::");
         console.log(err);
-        console.log("UserName or password is not correct!");
+        setWorning("Username or password is not correct!");
       });
   };
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
 
   return (
     <div className="align container h-100">
       <div className="">
         <div className="user_card">
           <div className="brand_logo_container">
-            <img
-              src="https://cdn-icons.flaticon.com/png/512/1916/premium/1916788.png?token=exp=1639550670~hmac=09861a67572e4df4a26dceca0d51538c"
-              className="brand_logo"
-              alt="Logo"
-            />
+            <img src={image} className="brand_logo" alt="Logo" />
           </div>
           <div className="form">
+            <h1 className="SignHeader">Sign In</h1>
             <form>
-              <h1 className="SignHeader">Sign In</h1>
               <div className="flexForm">
                 <div>
                   <label>User Name: </label>
@@ -97,7 +87,11 @@ function SignIn() {
                     placeholder="user name"
                     required
                     onChange={(e) => {
-                      setUserName(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        userName: e.target.value,
+                      }));
+                      setWorning("");
                     }}
                   />
                 </div>
@@ -111,7 +105,11 @@ function SignIn() {
                     placeholder="password"
                     required
                     onChange={(e) => {
-                      setPassword(e.target.value);
+                      setForm((prevState) => ({
+                        ...prevState,
+                        password: e.target.value,
+                      }));
+                      setWorning("");
                     }}
                   />
                 </div>
@@ -129,6 +127,7 @@ function SignIn() {
                 Sign In
               </button>
             </div>
+            <div className="Worning">{worning}</div>
             <div className="Link_container">
               <div>
                 Don't have an account?
