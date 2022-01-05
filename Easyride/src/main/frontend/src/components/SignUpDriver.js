@@ -246,12 +246,10 @@ function SignUpDriver() {
                 Sign up
               </button>
             </div>
-            {/* <div className="align_text"> */}
             <div className="Worning_driver">{worning}</div>
             <div className="Link_cont">
               Already have an account?
               <Link to="/signIn">Sign In</Link>
-              {/* </div> */}
             </div>
           </div>
         </div>
