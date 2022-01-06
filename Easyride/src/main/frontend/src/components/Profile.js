@@ -7,10 +7,16 @@ import NavBar from "./Navbar";
 
 function Profile() {
   const dispatch = useDispatch();
+
   const navigate = useNavigate();
   const onlineClicked = () => {
     navigate("/driver");
   };
+  const state = useSelector((state) => {
+    return {
+        user: state.User.user,
+    };
+  });
   
   return (
     <div>
@@ -20,21 +26,29 @@ function Profile() {
           <div>
             <img className="profile-img" src={profile} alt="profile" />
           </div>
-          <h3 className="title">Shrooq Alamri</h3>
-          <p className="category">Rider</p>
+          <h3 className="title">{state.user.firstName +" "+ state.user.lastName}</h3>
+          <p className="category">Driver</p>
           <div className="content">
             <div className="social-description">
-              <div className="flex-btn">
-                <p className="category">UserName:</p>
-                <p>Sh2394</p>
+              <div className="flex-text">
+                <p className="category">User name:</p>
+                <p>{state.user.id}</p>
               </div>
-              <div className="flex-btn">
+              <div className="flex-text">
                 <p className="category">Email:</p>
-                <p>Shrooq@gmail.com</p>
+                <p>{state.user.email}</p>
               </div>
               <div className="flex-text">
                 <p className="category">Phone:</p>
-                <p>0550605486</p>
+                <p>{state.user.phoneNumber}</p>
+              </div>
+              <div className="flex-text">
+                <p className="category">Car:</p>
+                <p>{state.user.carName}</p>
+              </div>
+              <div className="flex-text">
+                <p className="category">licenses plate:</p>
+                <p>{state.user.licenses_plate}</p>
               </div>
             </div>
             <div className="social-description">

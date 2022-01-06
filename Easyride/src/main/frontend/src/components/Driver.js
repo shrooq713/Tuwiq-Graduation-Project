@@ -8,7 +8,6 @@ function Driver() {
   const dispatch = useDispatch();
 
   const currentLoc = () => {
-    console.log("online clicked");
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log("current loc");
