@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import image from "../Images/logo1.png";
+import profile from "../Images/profile.png";
 import { addDriverLocation } from "../reducers/DriverLocation/DriverLocation";
+import NavBar from "./Navbar";
 
 function Driver() {
   const dispatch = useDispatch();
@@ -38,13 +39,6 @@ function Driver() {
 
   return (
     <div>
-      <img className="icon" src={image} alt="Logo" />
-      <h1>
-        <span role="img" aria-label="tent">
-          Easyride
-        </span>
-      </h1>
-      <button onClick={currentLoc}>online</button>
     </div>
   );
 }

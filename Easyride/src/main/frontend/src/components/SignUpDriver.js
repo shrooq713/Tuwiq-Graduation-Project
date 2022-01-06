@@ -59,7 +59,7 @@ function SignUpDriver() {
                   const action_token = setToken(token);
                   console.log(token);
                   dispatch(action_token);
-                  navigate("/rider");
+                  navigate("/profile");
                 })
                 .catch(function (error) {
                   console.error(error);
