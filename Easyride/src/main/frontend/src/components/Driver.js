@@ -1,22 +1,16 @@
-import React, { useState } from "react";
-import Locate from "./Locate";
+import React from "react";
 import {
   GoogleMap,
-  InfoWindow,
-  Marker,
   useLoadScript,
+  Marker,
+  InfoWindow,
 } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
-import mapStyles from "../mapStyles";
-import PinPickUp from "./PinPickUp";
+import { useSelector } from "react-redux";
 import NavBar from "./Navbar";
-import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { addTrips } from "../reducers/Trips/Trips";
-import { formatRelative } from "date-fns";
+import mapStyles from "../mapStyles";
 
-const libraries = ["places", "directions"];
-
+const libraries = ["places"];
 const mapContainerStyle = {
   height: "100vh",
   width: "100vw",
@@ -32,122 +26,74 @@ const center = {
   lat: 24.71,
   lng: 46.67,
 };
+
 export default function Driver() {
+  const state = useSelector((state) => {
+    return {
+      user: state.User.user,
+      driverLocation: state.DriverLocation.DriverLocation,
+      trips: state.Trips.trips,
+    };
+  });
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBqTC5xkt1ubdlktunhCxpBI9_yEiL44XQ",
     libraries,
   });
-  const state = useSelector((state) => {
-    return {
-      trips: state.Trips.trips,
-    };
-  });
-  const [currentLat, setCurrentLat] = useState(0);
-  const [currentLng, setCurrentLng] = useState(0);
-  const dispatch = useDispatch();
+  const [selected, setSelected] = React.useState(null);
 
-  const currentLoc = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        console.log("current loc");
-        console.log(position);
-        setCurrentLat(position.coords.latitude);
-        setCurrentLng(position.coords.longitude);
-      },
-      () => null
-    );
-  };
-
-  const [pickSelected, setPickSelected] = useState(null);
-  const [pickLocationLat, setPickLocationLat] = useState(0);
-  const [pickLocationLng, setPickLocationLng] = useState(0);
-  const [pin, setPin] = useState([]);
-
-  //   test ---------------------------------------
-  const [markers, setMarkers] = useState([]);
-  const [selected, setSelected] = useState(null);
-  // ------------------------------------------------
   const mapRef = React.useRef();
-  const onMapLoad = (map) => {
+  const onMapLoad = React.useCallback((map) => {
     mapRef.current = map;
-    console.log("mapRef");
-    console.log(map);
-  };
-  const panTo = () => {
-    // mapRef.current.panTo({ lat, lng });
-    state.trips.map((trip) => {
-      setPickLocationLat(trip.pickUpLat);
-      setPickLocationLng(trip.pickUpLng);
-      return mapRef.current.panTo({ lat: trip.pickUpLat, lng: trip.pickUpLng });
-    });
-
-    // mapRef.current.setZoom(13);
-  };
+  }, []);
 
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
-  const getTrips = () => {
-    axios
-      .get(`http://localhost:8080/trip`)
-      .then(function (response) {
-        dispatch(addTrips(response.data));
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-    console.log(state.trips);
-  };
-  console.log(state.trips);
 
   return (
     <div>
-      <NavBar></NavBar>
-      <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
-      {/* <SearchPickUp panTo={panTo} /> */}
-
+      <NavBar />
       <GoogleMap
         id="map"
         mapContainerStyle={mapContainerStyle}
-        zoom={12}
+        zoom={8}
         center={center}
         options={options}
-        // onClick={onMapClick}
         onLoad={onMapLoad}
       >
-        {/* test  */}
-        {/* {console.log(state.trips)}
+        {/*  Pin driver location  */}
+        <Marker
+          key={`${state.driverLocation.lat}-${state.driverLocation.lng}`}
+          position={{
+            lat: state.driverLocation.lat,
+            lng: state.driverLocation.lng,
+          }}
+          icon={{
+            url: "https://www.svgrepo.com/show/308201/car-driver-transportation-car-drive.svg",
+            origin: new window.google.maps.Point(0, 0),
+            anchor: new window.google.maps.Point(15, 15),
+            scaledSize: new window.google.maps.Size(30, 30),
+          }}
+        />
+
+        {/* pin trips */}
         {state.trips.map((marker) => (
           <Marker
-            key={`${24.87364}-${48.98736}`}
-            position={{ lat: 24.87364, lng: 48.98736 }}
+            key={`${marker.pickUpLat}-${marker.pickUpLng}`}
+            position={{ lat: marker.pickUpLat, lng: marker.pickUpLng }}
             onClick={() => {
               setSelected(marker);
             }}
             icon={{
-              url: `/bear.svg`,
+              url: "https://www.svgrepo.com/show/311072/person-clock.svg",
               origin: new window.google.maps.Point(0, 0),
               anchor: new window.google.maps.Point(15, 15),
               scaledSize: new window.google.maps.Size(30, 30),
             }}
           />
-        ))} */}
-        <Marker
-            key={`${24.87364}-${48.98736}`}
-            position={{ lat: 24.87364, lng: 48.98736 }}
-            // onClick={() => {
-            //   setSelected(marker);
-            // }}
-            icon={{
-              url: `/bear.svg`,
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        {console.log(selected)}
+        ))}
         {selected ? (
           <InfoWindow
-            position={{ lat: selected.lat, lng: selected.lng }}
+            position={{ lat: selected.pickUpLat, lng: selected.pickUpLng }}
             onCloseClick={() => {
               setSelected(null);
             }}
@@ -155,43 +101,33 @@ export default function Driver() {
             <div>
               <h2>
                 <span role="img" aria-label="bear">
-                  🐻
+                  👤
                 </span>{" "}
-                Alert
+                Trip
               </h2>
-              <p>Spotted {formatRelative(selected.time, new Date())}</p>
+              <p>
+                Rider name:{" "}
+                {selected.rider.firstName + " " + selected.rider.lastName}
+              </p>
+              <p>Day: {selected.day}</p>
+              <p>Time: {selected.time}</p>
+              <button
+                onClick={() => {
+                  console.log("cliked" + selected.id);
+                }}
+              >
+                {" "}
+                <img
+                  className="accept-img"
+                  src="https://www.svgrepo.com/show/92787/check-mark.svg"
+                  alt="Logo"
+                />
+              </button>
             </div>
           </InfoWindow>
         ) : null}
-        {/* <PinPickUp
-          setSelected={setPickSelected}
-          selected={pickSelected}
-          pickLocationLat={pickLocationLat}
-          pickLocationLng={pickLocationLng}
-        /> */}
       </GoogleMap>
-      {/* <button
-        onClick={() => {
-          getTrips();
-          currentLoc();
-          //   panTo({ lat: state.trips[0].pickUpLat, lng: state.trips[0].pickUpLng })
-          state.trips.map((trip) => {
-            console.log(trip);
-            // panTo({ lat: trip.pickUpLat, lng: trip.pickUpLng });
-            //  panTo({ lat: trip.pickUpLat, lng: trip.pickUpLng })
-            return (
-              <PinPickUp
-                setSelected={setPickSelected}
-                selected={pickSelected}
-                pickLocationLat={trip.pickUpLat}
-                pickLocationLng={trip.pickUpLng}
-              />
-            );
-          });
-        }}
-      >
-        click me
-      </button> */}
+      {/* <button onClick={getTrips}>getTrips</button> */}
     </div>
   );
 }

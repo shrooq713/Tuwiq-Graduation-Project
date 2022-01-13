@@ -1,23 +1,49 @@
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import profile from "../Images/profile.png";
 import { addDriverLocation } from "../reducers/DriverLocation/DriverLocation";
+import { addTrips } from "../reducers/Trips/Trips";
 import NavBar from "./Navbar";
 
 function Profile() {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-  const onlineClicked = () => {
-    navigate("/driver");
-  };
+
   const state = useSelector((state) => {
     return {
-        user: state.User.user,
+      user: state.User.user,
+      driverLocation: state.DriverLocation.DriverLocation,
     };
   });
-  
+
+  const onlineClicked = () => {
+    axios
+      .get(`http://localhost:8080/trip`)
+      .then(function (response) {
+        dispatch(addTrips(response.data));
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        dispatch(
+          addDriverLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          })
+        );
+      },
+      () => null
+    );
+
+    console.log("current location");
+    console.log(state.driverLocation);
+    navigate("/driver");
+  };
+
   return (
     <div>
       <div className="page-header clear-filter" filter-color="orange">
@@ -26,7 +52,9 @@ function Profile() {
           <div>
             <img className="profile-img" src={profile} alt="profile" />
           </div>
-          <h3 className="title">{state.user.firstName +" "+ state.user.lastName}</h3>
+          <h3 className="title">
+            {state.user.firstName + " " + state.user.lastName}
+          </h3>
           <p className="category">Driver</p>
           <div className="content">
             <div className="social-description">

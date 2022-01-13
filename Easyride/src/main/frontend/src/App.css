@@ -509,3 +509,12 @@ li {
   justify-content: center;
   column-gap: 8px;
 }
+
+.accept-img{
+  width:20px;
+}
+
+.accept-img:hover{
+  /* width:30px; */
+  /* background-color: red; */
+}
