@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @Table(name="trip")
 @Data
-@AllArgsConstructor
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +30,7 @@ public class Trip {
     @JoinColumn(name = "rider_id")
     private Rider rider;
 
-    public Trip(double v, double v1, double v2, double v3, String time, String saturday) {
+    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day) {
     }
 
 }

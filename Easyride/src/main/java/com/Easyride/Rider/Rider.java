@@ -14,7 +14,6 @@ import java.util.List;
 @Entity
 @Table(name="rider")
 @Data
-@RequiredArgsConstructor
 public class Rider {
     @Id
     private String id;
