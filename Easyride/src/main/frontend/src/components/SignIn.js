@@ -53,7 +53,7 @@ function SignIn() {
             .then(function (response) {
               const action2 = setUser(response.data);
               dispatch(action2);
-              navigate("/driver");
+              navigate("/profile");
             })
             .catch(function (error) {
               console.error(error);
