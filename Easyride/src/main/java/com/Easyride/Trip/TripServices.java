@@ -17,7 +17,8 @@ public class TripServices {
         return tripRepsitory.findAll();
     }
     public Trip getTrip(String id){
-        return tripRepsitory.findById(id).orElse(null);
+        int tripId = Integer.parseInt(id);
+        return tripRepsitory.findById(tripId).orElse(null);
     }
 
     public Trip addTrip(Trip trip){
@@ -25,7 +26,8 @@ public class TripServices {
     }
 
     public Trip updateTrip(String id, Trip data) {
-        Trip trip= tripRepsitory.findById(id).orElse(null);
+        int tripId = Integer.parseInt(id);
+        Trip trip= tripRepsitory.findById(tripId).orElse(null);
         if(trip != null) {
             trip.setPickUpLat(data.getPickUpLat());
             trip.setPickUpLng(data.getPickUpLng());
@@ -40,8 +42,9 @@ public class TripServices {
     }
 
     public Trip deleteTrip(String id) {
-        Trip trip = tripRepsitory.findById(id).orElse(null);
-        tripRepsitory.deleteById(id);
+        int tripId = Integer.parseInt(id);
+        Trip trip = tripRepsitory.findById(tripId).orElse(null);
+        tripRepsitory.deleteById(tripId);
         return trip;
     }
 }
