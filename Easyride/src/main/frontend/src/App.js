@@ -6,6 +6,7 @@ import SignUp from "./components/SignUp";
 import SignUpDriver from "./components/SignUpDriver";
 import Driver from "./components/Driver";
 import Profile from "./components/Profile";
+import ActiveTrip from "./components/ActiveTrip";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
             <Route path="/SignUpDriver" element={<SignUpDriver />} />
             <Route path="/rider" element={<Rider />} />
             <Route path="/driver" element={<Driver/>} />
-            <Route path="/profile" element={<Profile />} />            
+            <Route path="/profile" element={<Profile />} />           
+            <Route path="/activeTrip/:id" element={<ActiveTrip />} />
           </Routes>
         </div>
       </BrowserRouter>

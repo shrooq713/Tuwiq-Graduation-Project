@@ -9,6 +9,7 @@ import "@reach/combobox/styles.css";
 import { useSelector } from "react-redux";
 import NavBar from "./Navbar";
 import mapStyles from "../mapStyles";
+import { Link, useNavigate } from "react-router-dom";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -28,6 +29,7 @@ const center = {
 };
 
 export default function Driver() {
+  const navigate = useNavigate();
   const state = useSelector((state) => {
     return {
       user: state.User.user,
@@ -111,17 +113,18 @@ export default function Driver() {
               </p>
               <p>Day: {selected.day}</p>
               <p>Time: {selected.time}</p>
-              <button
-                onClick={() => {
-                  console.log("cliked" + selected.id);
-                }}
-              >
-                {" "}
-                <img
-                  className="accept-img"
-                  src="https://www.svgrepo.com/show/92787/check-mark.svg"
-                  alt="Logo"
-                />
+              <button>
+                <Link
+                  to={{
+                    pathname: `/activeTrip/${selected.id}`,
+                  }}
+                >
+                  <img
+                    className="accept-img"
+                    src="https://www.svgrepo.com/show/92787/check-mark.svg"
+                    alt="Logo"
+                  />
+                </Link>
               </button>
             </div>
           </InfoWindow>

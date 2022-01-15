@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    String id;
     private float pickUpLat;
     private float pickUpLng;
     private float dropLat;
