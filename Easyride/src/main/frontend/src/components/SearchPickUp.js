@@ -35,6 +35,8 @@ function SearchPickUp({ panTo }) {
     try {
       const results = await getGeocode({ address });
       const { lat, lng } = await getLatLng(results[0]);
+      console.log({ lat, lng });
+      console.log(lat);
       panTo({ lat, lng });
     } catch (error) {
       console.log("😱 Error: ", error);
