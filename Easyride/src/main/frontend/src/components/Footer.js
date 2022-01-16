@@ -15,14 +15,13 @@ function Footer() {
               </li>
               <li className="footer-list">
                 <Link className="nav-link" to="/">
-                  <i class="fa fa-angle-double-right element"></i> Contact with
-                  us
+                  <i class="fa fa-angle-double-right element"></i> Contact us
                 </Link>
               </li>
             </ul>
           </div>
           <div class="joinus-container">
-            <h5 className="footer-header">Join with us</h5>
+            <h5 className="footer-header">Join us</h5>
             <ul class="quick-links">
               <li className="footer-list">
                 <Link className="nav-link" to="/">
