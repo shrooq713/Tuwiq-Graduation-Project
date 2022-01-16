@@ -1,3 +1,4 @@
+import Footer from "./Footer";
 import NavBar from "./Navbar";
 
 function AboutUs() {
@@ -31,6 +32,7 @@ function AboutUs() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }
