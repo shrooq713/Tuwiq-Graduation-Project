@@ -2,8 +2,7 @@ package com.Easyride.Trip;
 
 import com.Easyride.Driver.Driver;
 import com.Easyride.Rider.Rider;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -19,6 +18,7 @@ public class Trip {
     private long pickUpLng;
     private long dropLat;
     private long dropLng;
+
     private String time;
     private String day;
 

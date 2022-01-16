@@ -53,7 +53,6 @@ export default function Rider() {
   };
   // currentLoc();
 
-  const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState();
   const [dropSelected, setDropSelected] = useState(null);
   const [pickSelected, setPickSelected] = useState(null);

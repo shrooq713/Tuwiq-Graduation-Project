@@ -4,7 +4,10 @@ import Rider from "./components/Rider";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import SignUpDriver from "./components/SignUpDriver";
-import DriverMap from "./components/DriverMap";
+import Driver from "./components/Driver";
+import Profile from "./components/Profile";
+import ActiveTrip from "./components/ActiveTrip";
+import AboutUs from "./components/Aboutus";
 
 function App() {
   return (
@@ -16,7 +19,10 @@ function App() {
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/SignUpDriver" element={<SignUpDriver />} />
             <Route path="/rider" element={<Rider />} />
-            <Route path="/driver" element={<DriverMap />} />
+            <Route path="/driver" element={<Driver/>} />
+            <Route path="/profile" element={<Profile />} />           
+            <Route path="/activeTrip/:id" element={<ActiveTrip />} />
+            <Route path="/aboutus" element={<AboutUs />} />
           </Routes>
         </div>
       </BrowserRouter>
