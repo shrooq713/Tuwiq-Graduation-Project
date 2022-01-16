@@ -70,15 +70,15 @@ function SignIn() {
   return (
     <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
-      <div className="align container h-100">
-        <div className="">
+      <div className="align">
+        <div >
           <div className="user_card">
             <div className="brand_logo_container">
               <img src={image} className="brand_logo" alt="Logo" />
             </div>
             <div className="form">
-              <h1 className="SignHeader">Sign In</h1>
               <form>
+              <h1 className="SignHeader">Sign In</h1>
                 <div className="flexForm">
                   <div>
                     <label>User Name: </label>
@@ -133,12 +133,12 @@ function SignIn() {
               <div className="Worning">{worning}</div>
               <div className="Link_container">
                 <div>
-                  Don't have an account?
-                  <Link to="/">Sign Up</Link>
+                  Don't have an account? {" "}
+                  <Link className="link-color" to="/">Sign Up</Link>
                 </div>
                 <div>
-                  Are you driver?
-                  <Link to="/signInDriver">Sign In</Link>
+                  Are you driver? {" "}
+                  <Link className="link-color" to="/signInDriver">Sign In</Link>
                 </div>
               </div>
             </div>
