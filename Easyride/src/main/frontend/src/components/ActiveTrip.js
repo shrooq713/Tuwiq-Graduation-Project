@@ -31,7 +31,7 @@ function ActiveTrip() {
   //   });
   //   console.log(state.trips);
   return (
-    <div>
+    <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
       {/* <div>{state.trips}</div> */}
       {/* <h1>{params.id}</h1> */}

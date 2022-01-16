@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../reducers/User/User";
 import image from "../Images/logo1.png";
+import NavBar from "./Navbar";
 
 function SignIn() {
   const navigate = useNavigate();
@@ -67,75 +68,78 @@ function SignIn() {
   };
 
   return (
-    <div className="align container h-100">
-      <div className="">
-        <div className="user_card">
-          <div className="brand_logo_container">
-            <img src={image} className="brand_logo" alt="Logo" />
-          </div>
-          <div className="form">
-            <h1 className="SignHeader">Sign In</h1>
-            <form>
-              <div className="flexForm">
-                <div>
-                  <label>User Name: </label>
-                </div>
-                <div>
-                  <input
-                    type="text"
-                    className="input-group-text"
-                    placeholder="user name"
-                    required
-                    onChange={(e) => {
-                      setForm((prevState) => ({
-                        ...prevState,
-                        userName: e.target.value,
-                      }));
-                      setWorning("");
-                    }}
-                  />
-                </div>
-                <div>
-                  <label>Password: </label>
-                </div>
-                <div>
-                  <input
-                    type="password"
-                    className="input-group-text"
-                    placeholder="password"
-                    required
-                    onChange={(e) => {
-                      setForm((prevState) => ({
-                        ...prevState,
-                        password: e.target.value,
-                      }));
-                      setWorning("");
-                    }}
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
-          <div className="flexForm">
-            <div className="login_container">
-              <button
-                type="button"
-                name="button"
-                className="login_btn gap"
-                onClick={signInClicked}
-              >
-                Sign In
-              </button>
+    <div className="page-header clear-filter" filter-color="orange">
+      <NavBar />
+      <div className="align container h-100">
+        <div className="">
+          <div className="user_card">
+            <div className="brand_logo_container">
+              <img src={image} className="brand_logo" alt="Logo" />
             </div>
-            <div className="Worning">{worning}</div>
-            <div className="Link_container">
-              <div>
-                Don't have an account?
-                <Link to="/">Sign Up</Link>
+            <div className="form">
+              <h1 className="SignHeader">Sign In</h1>
+              <form>
+                <div className="flexForm">
+                  <div>
+                    <label>User Name: </label>
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      className="input-group-text"
+                      placeholder="user name"
+                      required
+                      onChange={(e) => {
+                        setForm((prevState) => ({
+                          ...prevState,
+                          userName: e.target.value,
+                        }));
+                        setWorning("");
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label>Password: </label>
+                  </div>
+                  <div>
+                    <input
+                      type="password"
+                      className="input-group-text"
+                      placeholder="password"
+                      required
+                      onChange={(e) => {
+                        setForm((prevState) => ({
+                          ...prevState,
+                          password: e.target.value,
+                        }));
+                        setWorning("");
+                      }}
+                    />
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div className="flexForm">
+              <div className="login_container">
+                <button
+                  type="button"
+                  name="button"
+                  className="login_btn gap"
+                  onClick={signInClicked}
+                >
+                  Sign In
+                </button>
               </div>
-              <div>
-                Are you driver?
-                <Link to="/signInDriver">Sign In</Link>
+              <div className="Worning">{worning}</div>
+              <div className="Link_container">
+                <div>
+                  Don't have an account?
+                  <Link to="/">Sign Up</Link>
+                </div>
+                <div>
+                  Are you driver?
+                  <Link to="/signInDriver">Sign In</Link>
+                </div>
               </div>
             </div>
           </div>

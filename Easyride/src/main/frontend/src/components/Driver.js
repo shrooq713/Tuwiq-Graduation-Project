@@ -53,7 +53,7 @@ export default function Driver() {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div>
+    <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
       <GoogleMap
         id="map"

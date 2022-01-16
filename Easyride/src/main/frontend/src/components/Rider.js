@@ -125,8 +125,8 @@ export default function Rider() {
   };
 
   return (
-    <div>
-      <NavBar/>
+    <div className="page-header clear-filter" filter-color="orange">
+      <NavBar />
 
       <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
       <SearchDropIn panTo={panTo} />
@@ -176,7 +176,7 @@ export default function Rider() {
       >
         Confirm order
       </button>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
