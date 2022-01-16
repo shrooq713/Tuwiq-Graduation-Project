@@ -46,7 +46,6 @@ function DriverCurrentLocation() {
           (position) => {
             console.log("position");
             console.log(position);
-
             sendMessage(
               JSON.stringify({
                 messageContent:

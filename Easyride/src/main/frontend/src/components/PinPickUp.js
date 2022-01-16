@@ -7,6 +7,7 @@ function PinPickUp({
   pickLocationLat,
   pickLocationLng,
 }) {
+  console.log("in pin");
   return (
     <>
       <Marker

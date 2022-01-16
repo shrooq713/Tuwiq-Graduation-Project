@@ -13,6 +13,8 @@ import SearchDropIn from "./SearchDropIn";
 import PinDropIn from "./PinDropIn";
 import PinPickUp from "./PinPickUp";
 import image from "../Images/logo1.png";
+import NavBar from "./Navbar";
+import Footer from "./Footer";
 
 const libraries = ["places", "directions"];
 
@@ -53,7 +55,6 @@ export default function Rider() {
   };
   // currentLoc();
 
-  const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState();
   const [dropSelected, setDropSelected] = useState(null);
   const [pickSelected, setPickSelected] = useState(null);
@@ -125,7 +126,7 @@ export default function Rider() {
 
   return (
     <div>
-      M
+      <NavBar/>
 
       <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
       <SearchDropIn panTo={panTo} />
@@ -175,6 +176,7 @@ export default function Rider() {
       >
         Confirm order
       </button>
+      <Footer/>
     </div>
   );
 }

@@ -2,7 +2,7 @@ package com.Easyride.Trip;
 
 import com.Easyride.Driver.Driver;
 import com.Easyride.Rider.Rider;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -12,12 +12,13 @@ import javax.persistence.*;
 @Data
 public class Trip {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private long pickUpLat;
     private long pickUpLng;
     private long dropLat;
     private long dropLng;
+
     private String time;
     private String day;
 
@@ -28,4 +29,10 @@ public class Trip {
     @ManyToOne
     @JoinColumn(name = "rider_id")
     private Rider rider;
+
+    public Trip() {
+    }
+
+    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day) {
+    }
 }
