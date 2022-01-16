@@ -7,6 +7,7 @@ import SignUpDriver from "./components/SignUpDriver";
 import Driver from "./components/Driver";
 import Profile from "./components/Profile";
 import ActiveTrip from "./components/ActiveTrip";
+import AboutUs from "./components/Aboutus";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/driver" element={<Driver/>} />
             <Route path="/profile" element={<Profile />} />           
             <Route path="/activeTrip/:id" element={<ActiveTrip />} />
+            <Route path="/aboutus" element={<AboutUs />} />
           </Routes>
         </div>
       </BrowserRouter>
