@@ -107,7 +107,13 @@ body {
 }
 .align {
   margin-left: 35%;
-  margin-top: 5rem;
+  margin-top: 6rem;
+}
+.link-color {
+  color: #c03a2b;
+}
+.link-color:hover {
+  color: #eeeeee;
 }
 .user_card_signUp {
   height: 600px;
@@ -120,6 +126,7 @@ body {
   justify-content: center;
   flex-direction: column;
   padding: 10px;
+  padding-bottom: 0%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -216,7 +223,7 @@ body {
   background-color: #c0392b !important;
 }
 .form {
-  margin-top: 30%;
+  margin-top: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -224,7 +231,8 @@ body {
 }
 
 .SignHeader {
-  margin-top: 20%;
+  /* margin-top: 10%; */
+  margin-left: 90px;
 }
 .flexForm {
   display: flex;
@@ -238,7 +246,7 @@ body {
 }
 
 .Link_container {
-  margin-top: 30px;
+  margin-top: 25px;
   display: flex;
   row-gap: 5px;
   flex-direction: column;

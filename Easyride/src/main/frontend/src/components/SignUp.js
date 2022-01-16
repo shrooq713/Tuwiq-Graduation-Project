@@ -72,8 +72,8 @@ function SignUp() {
   return (
     <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
-      <div className="align container h-100">
-        <div className="">
+      <div className="align">
+        <div>
           <div className="user_card_signUp">
             <div className="brand_logo_container">
               <img src={image} className="brand_logo" alt="Logo" />
@@ -199,11 +199,11 @@ function SignUp() {
               <div className="Worning">{worning}</div>
               <div className="Link_container">
                 <div>
-                  Already have an account?
-                  <Link to="/signIn">Sign In</Link>
+                  Already have an account? {" "}
+                  <Link className="link-color" to="/signIn">Sign In</Link>
                 </div>
                 <div>
-                  <Link to="/SignUpDriver">Drive with us!</Link>
+                  <Link className="link-color" to="/SignUpDriver">Drive with us!</Link>
                 </div>
               </div>
             </div>
