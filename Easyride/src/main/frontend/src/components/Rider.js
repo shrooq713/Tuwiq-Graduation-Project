@@ -125,16 +125,7 @@ export default function Rider() {
 
   return (
     <div>
-      <img
-        className="icon"
-        src={image}
-        alt = "Logo"
-      />
-      <h1>
-        <span role="img" aria-label="tent">
-          Easyride
-        </span>
-      </h1>
+      M
 
       <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
       <SearchDropIn panTo={panTo} />
