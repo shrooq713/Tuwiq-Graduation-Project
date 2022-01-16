@@ -114,7 +114,7 @@ body {
   width: 350px;
   margin-top: auto;
   margin-bottom: auto;
-  background: #ee8869;
+  background: #d2726e;
   position: relative;
   display: flex;
   justify-content: center;
@@ -132,7 +132,7 @@ body {
   width: 350px;
   margin-top: auto;
   margin-bottom: auto;
-  background: #ee8869;
+  background: #d2726e;
   position: relative;
   display: flex;
   justify-content: center;
@@ -150,7 +150,7 @@ body {
   width: 350px;
   margin-top: auto;
   margin-bottom: auto;
-  background: #ee8869;
+  background: #d2726e;
   position: relative;
   display: flex;
   justify-content: center;
@@ -356,15 +356,6 @@ p {
   text-transform: capitalize;
   font-weight: 700;
   color: #9a9a9a;
-}
-
-body {
-  /* color: #2c2c2c;
-  font-size: 14px;
-  font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
-  overflow-x: hidden;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased; */
 }
 
 .now-ui-icons {
