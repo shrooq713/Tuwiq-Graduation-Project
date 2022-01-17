@@ -23,9 +23,11 @@ function Locate({ panTo, lat, lng }) {
       }}
     >
       <img
-        src="https://cdn-icons.flaticon.com/png/128/4284/premium/4284088.png?token=exp=1639291842~hmac=42d680974202c57fa302b448fdfae2f7"
+      className="img-current-loc"
+        src="https://www.svgrepo.com/show/115354/map-location.svg"
         alt="Current location"
       />
+      <p className="current-loc-text">current <br/> location</p>
     </button>
   );
 }
