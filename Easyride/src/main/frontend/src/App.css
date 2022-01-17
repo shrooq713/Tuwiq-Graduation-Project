@@ -231,9 +231,9 @@ body {
 }
 
 .SignHeader {
-  /* margin-top: 10%; */
   margin-left: 90px;
 }
+
 .flexForm {
   display: flex;
   justify-content: center;

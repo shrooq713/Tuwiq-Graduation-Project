@@ -84,8 +84,8 @@ function SignUpDriver() {
               <img src={image} className="brand_logo" alt="Logo" />
             </div>
             <div className="form">
-              <h1 className="SignHeader">Sign Up</h1>
               <form>
+              <h1>Sign Up</h1>
                 <div className="flexForm">
                   <div>
                     <label>Driver Name: </label>
