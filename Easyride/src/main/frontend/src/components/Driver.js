@@ -11,6 +11,7 @@ import NavBar from "./Navbar";
 import mapStyles from "../mapStyles";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
+import axios from "axios";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -52,6 +53,16 @@ export default function Driver() {
   if (loadError) return "Error";
   if (!isLoaded) return "Loading...";
 
+  const AcceptClicked = () => {
+    axios
+      .put(`http://localhost:8080/trip/${selected.id}/true`,state.user)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
   return (
     <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
@@ -79,21 +90,27 @@ export default function Driver() {
         />
 
         {/* pin trips */}
-        {state.trips.map((marker) => (
-          <Marker
-            key={`${marker.pickUpLat}-${marker.pickUpLng}`}
-            position={{ lat: marker.pickUpLat, lng: marker.pickUpLng }}
-            onClick={() => {
-              setSelected(marker);
-            }}
-            icon={{
-              url: "https://www.svgrepo.com/show/311072/person-clock.svg",
-              origin: new window.google.maps.Point(0, 0),
-              anchor: new window.google.maps.Point(15, 15),
-              scaledSize: new window.google.maps.Size(30, 30),
-            }}
-          />
-        ))}
+        {console.log(state.trips)}
+        {state.trips.map((marker) => {
+          if (marker.accepted === "false") {
+            return (
+              <Marker
+                key={`${marker.pickUpLat}-${marker.pickUpLng}`}
+                position={{ lat: marker.pickUpLat, lng: marker.pickUpLng }}
+                onClick={() => {
+                  setSelected(marker);
+                }}
+                icon={{
+                  url: "https://www.svgrepo.com/show/311072/person-clock.svg",
+                  origin: new window.google.maps.Point(0, 0),
+                  anchor: new window.google.maps.Point(15, 15),
+                  scaledSize: new window.google.maps.Size(30, 30),
+                }}
+              />
+            );
+          }
+          return;
+        })}
         {selected ? (
           <InfoWindow
             position={{ lat: selected.pickUpLat, lng: selected.pickUpLng }}
@@ -114,7 +131,7 @@ export default function Driver() {
               </p>
               <p>Day: {selected.day}</p>
               <p>Time: {selected.time}</p>
-              <button>
+              <button onClick={AcceptClicked}>
                 <Link
                   to={{
                     pathname: `/activeTrip/${selected.id}`,
@@ -131,7 +148,7 @@ export default function Driver() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

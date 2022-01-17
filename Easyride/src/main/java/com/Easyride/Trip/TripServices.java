@@ -1,5 +1,6 @@
 package com.Easyride.Trip;
 
+import com.Easyride.Driver.Driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,18 @@ public class TripServices {
             trip.setDropLng(data.getDropLng());
             trip.setTime(data.getTime());
             trip.setDay(data.getDay());
+            tripRepsitory.save(trip);
+            return trip;
+        }
+        return null;
+    }
+
+    public Trip updateTripAccepted(String id, String accrpted, Driver driver) {
+        int tripId = Integer.parseInt(id);
+        Trip trip= tripRepsitory.findById(tripId).orElse(null);
+        if(trip != null) {
+            trip.setAccepted(accrpted);
+            trip.setDriver(driver);
             tripRepsitory.save(trip);
             return trip;
         }
