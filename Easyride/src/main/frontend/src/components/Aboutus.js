@@ -3,8 +3,8 @@ import NavBar from "./Navbar";
 
 function AboutUs() {
   return (
-    <div>
-      <NavBar></NavBar>
+    <div className="page-header clear-filter" filter-color="orange">
+      <NavBar/>
       <div className="aboutus-font">
         <div className="image-aboutus-banner">
           <h1 className="aboutus-text">About Us</h1>
