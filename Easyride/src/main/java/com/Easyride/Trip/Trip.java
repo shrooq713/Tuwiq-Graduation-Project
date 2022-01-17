@@ -12,15 +12,16 @@ import javax.persistence.*;
 @Data
 public class Trip {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private long pickUpLat;
     private long pickUpLng;
     private long dropLat;
     private long dropLng;
-
     private String time;
     private String day;
+    private String confirmed;
+    private String accepted;
 
     @ManyToOne
     @JoinColumn(name = "driver_id")
@@ -30,9 +31,9 @@ public class Trip {
     @JoinColumn(name = "rider_id")
     private Rider rider;
 
-    public Trip() {
+    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day, String confirmed) {
     }
 
-    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day) {
+    public Trip() {
     }
 }

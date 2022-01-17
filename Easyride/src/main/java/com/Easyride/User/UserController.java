@@ -20,11 +20,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/{userName}")
-    public User getUser(@PathVariable String userName){
-        System.out.println("userName");
-        System.out.println(userName);
-        return userService.getUserByUserName(userName);
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable String id){
+        return userService.getUserById(id);
     }
 
     @PostMapping

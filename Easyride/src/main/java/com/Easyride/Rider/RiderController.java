@@ -42,6 +42,7 @@ public class RiderController {
 
     @GetMapping("/rider/user/{userId}")
     public Rider getRiderByUserId(@PathVariable String userId){
+        System.out.println("in");
         return riderServices.getRiderByUserId(userId);
     }
 }

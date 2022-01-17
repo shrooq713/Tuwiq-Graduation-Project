@@ -15,6 +15,8 @@ import PinPickUp from "./PinPickUp";
 import image from "../Images/logo1.png";
 import NavBar from "./Navbar";
 import Footer from "./Footer";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const libraries = ["places", "directions"];
 
@@ -38,6 +40,12 @@ export default function Rider() {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: "AIzaSyBqTC5xkt1ubdlktunhCxpBI9_yEiL44XQ",
     libraries,
+  });
+  const state = useSelector((state) => {
+    return {
+      user: state.User.user,
+      token: state.User.token,
+    };
   });
   const [currentLat, setCurrentLat] = useState(0);
   const [currentLng, setCurrentLng] = useState(0);
@@ -172,6 +180,65 @@ export default function Rider() {
           //confirm order here
           console.log("conf clikcked");
           changeDirection(origin, destination);
+          let today = new Date();
+          let time = today.getHours() + ":" + today.getMinutes();
+          const weekday = [
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+          ];
+          let day = weekday[today.getDay()];
+          let trip = {
+            pickUpLat: pickLocationLat,
+            pickUpLng: pickLocationLng,
+            dropLat: dropLocationLat,
+            dropLng: dropLocationLng,
+            time: time,
+            day: day,
+            confirmed: "true",
+            accepted: "false",
+            rider: state.user,
+          };
+          axios
+            .post(`http://localhost:8080/trip`, trip)
+            .then(function (response) {
+              console.log(response.data);
+              console.log("accepted? ", response.data.accepted);
+              console.log("trip id: ", response.data.id);
+              let count = 0;
+              if (response.data.accepted === "false") {
+                let interval = setInterval(() => {
+                  if (count <= 10) {
+                    console.log("inside if accepted");
+                    console.log("count is : ", count);
+                    axios
+                      .get(`http://localhost:8080/trip/${response.data.id}`)
+                      .then(function (response) {
+                        console.log("repeted");
+                        console.log(response.data);
+                      })
+                      .catch(function (error) {
+                        console.error(error);
+                      });
+                    count += 1;
+                  } else {
+                    clearInterval(interval);
+                    console.log("grater than 10");
+                    return;
+                  }
+                }, 3000);
+              } else {
+                console.log("accepted");
+                // navigate("/activeTrip");
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
         }}
       >
         Confirm order
