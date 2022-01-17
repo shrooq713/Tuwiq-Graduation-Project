@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { addActiveTrip } from "../reducers/ActiveTrip/ActiveTrip";
+import Footer from "./Footer";
 import NavBar from "./Navbar";
 
 function ActiveTrip() {
@@ -30,11 +31,12 @@ function ActiveTrip() {
   //   });
   //   console.log(state.trips);
   return (
-    <div>
+    <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
       {/* <div>{state.trips}</div> */}
       {/* <h1>{params.id}</h1> */}
       <button>Click me</button>
+      <Footer/>
     </div>
   );
 }

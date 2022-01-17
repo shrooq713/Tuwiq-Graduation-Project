@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import profile from "../Images/profile.png";
 import { addDriverLocation } from "../reducers/DriverLocation/DriverLocation";
 import { addTrips } from "../reducers/Trips/Trips";
+import Footer from "./Footer";
 import NavBar from "./Navbar";
 
 function Profile() {
@@ -96,6 +97,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

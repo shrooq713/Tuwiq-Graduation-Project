@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import NavBar from "./Navbar";
 import mapStyles from "../mapStyles";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -52,7 +53,7 @@ export default function Driver() {
   if (!isLoaded) return "Loading...";
 
   return (
-    <div>
+    <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
       <GoogleMap
         id="map"
@@ -130,7 +131,7 @@ export default function Driver() {
           </InfoWindow>
         ) : null}
       </GoogleMap>
-      {/* <button onClick={getTrips}>getTrips</button> */}
+      <Footer/>
     </div>
   );
 }

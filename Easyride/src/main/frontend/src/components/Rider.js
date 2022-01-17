@@ -13,6 +13,8 @@ import SearchDropIn from "./SearchDropIn";
 import PinDropIn from "./PinDropIn";
 import PinPickUp from "./PinPickUp";
 import image from "../Images/logo1.png";
+import NavBar from "./Navbar";
+import Footer from "./Footer";
 
 const libraries = ["places", "directions"];
 
@@ -123,17 +125,8 @@ export default function Rider() {
   };
 
   return (
-    <div>
-      <img
-        className="icon"
-        src={image}
-        alt = "Logo"
-      />
-      <h1>
-        <span role="img" aria-label="tent">
-          Easyride
-        </span>
-      </h1>
+    <div className="page-header clear-filter" filter-color="orange">
+      <NavBar />
 
       <Locate panTo={panTo} lat={currentLat} lng={currentLng} />
       <SearchDropIn panTo={panTo} />
@@ -183,6 +176,7 @@ export default function Rider() {
       >
         Confirm order
       </button>
+      <Footer />
     </div>
   );
 }

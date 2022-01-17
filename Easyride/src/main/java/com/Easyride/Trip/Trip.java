@@ -30,7 +30,9 @@ public class Trip {
     @JoinColumn(name = "rider_id")
     private Rider rider;
 
-    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day) {
+    public Trip() {
     }
 
+    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day) {
+    }
 }

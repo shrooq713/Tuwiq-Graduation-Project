@@ -42,4 +42,17 @@ public class Rider {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 
+    public Rider() {
+    }
+
+    public Rider(String id, String firstName, String lastName, String password, String phoneNumber, String email, List<Trip> trip, User user) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.trip = trip;
+        this.user = user;
+    }
 }
