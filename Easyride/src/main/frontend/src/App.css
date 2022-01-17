@@ -62,15 +62,19 @@ h1.header {
   background: none;
   border: none;
   z-index: 10;
-  top: 80%;
-  left: 95.6%;
+  top: 12%;
+  left: 94%;
 }
 .locate img {
-  width: 50px;
+  width: 40px;
   cursor: pointer;
 }
 .locate img:hover {
-  width: 53px;
+  width: 43px;
+}
+.current-loc-text{
+  font-weight: bold;
+  font-size: 15px;
 }
 .confirm {
   position: absolute;
