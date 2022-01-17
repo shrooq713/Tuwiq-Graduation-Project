@@ -55,7 +55,7 @@ export default function Driver() {
 
   const AcceptClicked = () => {
     axios
-      .put(`http://localhost:8080/trip/${selected.id}/true`,state.user)
+      .put(`http://localhost:8080/trip/${selected.id}/true`, state.user)
       .then(function (response) {
         console.log(response.data);
       })
