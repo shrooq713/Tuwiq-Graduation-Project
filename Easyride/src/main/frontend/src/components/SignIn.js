@@ -90,10 +90,12 @@ function SignIn() {
                       placeholder="user name"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        console.log("e::::::::::::::::::");
+                        console.log(e.target.value);
+                        setForm({
+                          ...form,
                           userName: e.target.value,
-                        }));
+                        });
                         setWorning("");
                       }}
                     />
@@ -108,10 +110,10 @@ function SignIn() {
                       placeholder="password"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           password: e.target.value,
-                        }));
+                        });
                         setWorning("");
                       }}
                     />

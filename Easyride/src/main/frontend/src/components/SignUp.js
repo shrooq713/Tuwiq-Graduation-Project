@@ -92,10 +92,10 @@ function SignUp() {
                       placeholder="user name"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           id: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -108,10 +108,10 @@ function SignUp() {
                       className="input-group-text"
                       placeholder="first name"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           firstName: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -124,10 +124,10 @@ function SignUp() {
                       className="input-group-text"
                       placeholder="last name"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           lastName: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -141,10 +141,10 @@ function SignUp() {
                       placeholder="emaple@email.com"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           email: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -158,10 +158,10 @@ function SignUp() {
                       placeholder="050-000-0000"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           phoneNumber: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -175,10 +175,10 @@ function SignUp() {
                       placeholder="password"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           password: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
