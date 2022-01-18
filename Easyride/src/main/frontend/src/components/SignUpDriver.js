@@ -97,10 +97,10 @@ function SignUpDriver() {
                       placeholder="user name"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           id: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -113,10 +113,10 @@ function SignUpDriver() {
                       className="input-group-text"
                       placeholder="first name"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           firstName: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -129,10 +129,10 @@ function SignUpDriver() {
                       className="input-group-text"
                       placeholder="last name"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           lastName: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -146,10 +146,10 @@ function SignUpDriver() {
                       placeholder="emaple@email.com"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           email: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -163,10 +163,10 @@ function SignUpDriver() {
                       placeholder="050-000-0000"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           phoneNumber: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -180,10 +180,10 @@ function SignUpDriver() {
                       placeholder="password"
                       required
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           password: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -196,10 +196,10 @@ function SignUpDriver() {
                       className="input-group-text"
                       placeholder="car name"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           carName: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -212,10 +212,10 @@ function SignUpDriver() {
                       className="input-group-text"
                       placeholder="car type"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           carType: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
@@ -228,10 +228,10 @@ function SignUpDriver() {
                       className="input-group-text"
                       placeholder="licenses plate"
                       onChange={(e) => {
-                        setForm((prevState) => ({
-                          ...prevState,
+                        setForm({
+                          ...form,
                           licenses_plate: e.target.value,
-                        }));
+                        });
                       }}
                     />
                   </div>
