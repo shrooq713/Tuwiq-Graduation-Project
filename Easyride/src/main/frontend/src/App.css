@@ -79,7 +79,7 @@ h1.header {
 .confirm {
   position: absolute;
   width: 180px;
-  height: 45px;
+  height: 50px;
   top: 90%;
   right: 42%;
   background: rgb(78, 74, 74);
@@ -90,6 +90,31 @@ h1.header {
 }
 .confirm:hover {
   background: rgb(100, 95, 95);
+}
+.end-trip{
+  position: absolute;
+  width: 180px;
+  height: 45px;
+  top: 80%;
+  right: 42%;
+  background: rgb(78, 74, 74);
+  color: #ffffff;
+  font-size: 20px;
+  border: none;
+  z-index: 10;
+}
+.end-trip:hover {
+  background: rgb(100, 95, 95);
+}
+.selected-txt{
+  color: #000;
+}
+.selected-btn{
+  background: none;
+  border: none;
+}
+.selected-marker{
+  margin-left: 20px;
 }
 .currentLocation {
   display: flex;
@@ -514,7 +539,12 @@ li {
 }
 
 .accept-img {
-  width: 20px;
+  width: 25px;
+  background: url("https://www.svgrepo.com/show/92787/check-mark.svg") no-repeat;
+  display: inline-block;
+}
+.accept-img:hover {
+  background: url("https://www.svgrepo.com/show/11740/check.svg") no-repeat;
 }
 
 /* about us page */
@@ -620,4 +650,47 @@ section {
 
 .easyride-container {
   width: 300px;
+}
+
+
+/* trip */
+
+
+.trip-txt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  row-gap: -30px;
+  margin-top: 20px;
+}
+
+.trip_card {
+  height: 800px;
+  width: 500px;
+  margin-top: auto;
+  margin-bottom: 30px;
+  background: #d2726e;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 5px;
+}
+
+.trip-flex{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* gap: -100px; */
+}
+p{
+  margin: -200;
 }

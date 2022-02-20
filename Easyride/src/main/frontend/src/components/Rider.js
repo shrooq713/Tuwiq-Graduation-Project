@@ -12,11 +12,13 @@ import SearchPickUp from "./SearchPickUp";
 import SearchDropIn from "./SearchDropIn";
 import PinDropIn from "./PinDropIn";
 import PinPickUp from "./PinPickUp";
-import image from "../Images/logo1.png";
 import NavBar from "./Navbar";
 import Footer from "./Footer";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { addTrips } from "../reducers/Trips/Trips";
+import { addActiveTrip } from "../reducers/ActiveTrip/ActiveTrip";
 
 const libraries = ["places", "directions"];
 
@@ -41,6 +43,12 @@ export default function Rider() {
     googleMapsApiKey: "AIzaSyBqTC5xkt1ubdlktunhCxpBI9_yEiL44XQ",
     libraries,
   });
+
+  const [button, setButton] = useState("Confirm");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const state = useSelector((state) => {
     return {
       user: state.User.user,
@@ -71,6 +79,11 @@ export default function Rider() {
   const [pickLocationLat, setPickLocationLat] = useState(0);
   const [pickLocationLng, setPickLocationLng] = useState(0);
 
+  console.log("dropLocationLat "+dropLocationLat);
+  console.log("dropLocationLng "+dropLocationLng);
+  console.log("pickLocationLat "+pickLocationLat);
+  console.log("pickLocationLng "+pickLocationLng);
+
   const onMapClick = (e) => {
     setDropLocationLat(e.latLng.lat());
     setDropLocationLng(e.latLng.lng());
@@ -94,6 +107,9 @@ export default function Rider() {
       setPickLocationLng(lng);
     }
     pinType = "";
+
+    console.log(lat);
+    console.log(lng);
   };
 
   if (loadError) return "Error";
@@ -131,7 +147,6 @@ export default function Rider() {
       }
     );
   };
-
   return (
     <div className="page-header clear-filter" filter-color="orange">
       <NavBar />
@@ -178,8 +193,9 @@ export default function Rider() {
         className="confirm"
         onClick={() => {
           //confirm order here
+          setButton("Looking for driver! 🚘");
           console.log("conf clikcked");
-          changeDirection(origin, destination);
+          // changeDirection(origin, destination);
           let today = new Date();
           let time = today.getHours() + ":" + today.getMinutes();
           const weekday = [
@@ -192,6 +208,8 @@ export default function Rider() {
             "Saturday",
           ];
           let day = weekday[today.getDay()];
+          console.log("infooooooooooooooooooo");
+          console.log(pickLocationLat);
           let trip = {
             pickUpLat: pickLocationLat,
             pickUpLng: pickLocationLng,
@@ -199,8 +217,10 @@ export default function Rider() {
             dropLng: dropLocationLng,
             time: time,
             day: day,
-            confirmed: "true",
-            accepted: "false",
+            confirmed: true,
+            accepted: false,
+            canceled: false,
+            ended: false,
             rider: state.user,
           };
           axios
@@ -210,38 +230,43 @@ export default function Rider() {
               console.log("accepted? ", response.data.accepted);
               console.log("trip id: ", response.data.id);
               let count = 0;
-              if (response.data.accepted === "false") {
-                let interval = setInterval(() => {
-                  if (count <= 10) {
-                    console.log("inside if accepted");
-                    console.log("count is : ", count);
-                    axios
-                      .get(`http://localhost:8080/trip/${response.data.id}`)
-                      .then(function (response) {
-                        console.log("repeted");
+              // if (response.data.accepted === false) {
+              let interval = setInterval(() => {
+                if (count <= 20) {
+                  console.log("inside if accepted");
+                  console.log("count is : ", count);
+                  axios
+                    .get(`http://localhost:8080/trip/${response.data.id}`)
+                    .then(function (response) {
+                      console.log("repeted");
+                      console.log(response.data);
+                      if (response.data.accepted === true) {
+                        console.log("accepted");
                         console.log(response.data);
-                      })
-                      .catch(function (error) {
-                        console.error(error);
-                      });
-                    count += 1;
-                  } else {
-                    clearInterval(interval);
-                    console.log("grater than 10");
-                    return;
-                  }
-                }, 3000);
-              } else {
-                console.log("accepted");
-                // navigate("/activeTrip");
-              }
+                        dispatch(addActiveTrip(response.data));
+                        count = 21;
+                        navigate(`/active/${response.data.id}`);
+                        return;
+                      }
+                    })
+                    .catch(function (error) {
+                      console.error(error);
+                    });
+                  count += 1;
+                } else {
+                  clearInterval(interval);
+                  console.log("grater than 20");
+                  setButton("No driver accept the trip! 😢");
+                  return;
+                }
+              }, 3000);
             })
             .catch(function (error) {
               console.error(error);
             });
         }}
       >
-        Confirm order
+        {button}
       </button>
       <Footer />
     </div>

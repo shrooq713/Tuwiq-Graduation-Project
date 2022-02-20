@@ -33,23 +33,24 @@ function SignUp() {
       role: "Rider",
     };
     axios.post("http://localhost:8080/users", user).then(function (response) {
-      console.log(response.data);
-      if (response.data == null) {
+      console.log("id is:");
+      console.log(response.data.id);
+      let newForm = {...form};
+      newForm.user= { id: response.data.id }
+      console.log("new form is:");
+      console.log(newForm);
+      if (newForm == null) {
         console.log("UserName exist! please choose unique userName");
       } else {
-        setForm((prevState) => ({
-          ...prevState,
-          user: { id: response.data.id },
-        }));
         axios
-          .post("http://localhost:8080/rider", form)
+          .post("http://localhost:8080/rider", newForm)
           .then(function (response) {
             if (response.data === null) {
               console.log("email exist! please choose unique userName");
             } else {
-              const action = setUser(form);
+              const action = setUser(newForm);
               dispatch(action);
-              user = { userName: form.id, password: form.password };
+              let user = { userName: newForm.id, password: newForm.password };
               axios
                 .post("http://localhost:8080/login", user)
                 .then(function (response) {
@@ -199,11 +200,15 @@ function SignUp() {
               <div className="Worning">{worning}</div>
               <div className="Link_container">
                 <div>
-                  Already have an account? {" "}
-                  <Link className="link-color" to="/signIn">Sign In</Link>
+                  Already have an account?{" "}
+                  <Link className="link-color" to="/signIn">
+                    Sign In
+                  </Link>
                 </div>
                 <div>
-                  <Link className="link-color" to="/SignUpDriver">Drive with us!</Link>
+                  <Link className="link-color" to="/SignUpDriver">
+                    Drive with us!
+                  </Link>
                 </div>
               </div>
             </div>

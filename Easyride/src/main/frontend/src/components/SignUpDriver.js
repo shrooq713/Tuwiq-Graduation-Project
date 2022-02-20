@@ -40,19 +40,21 @@ function SignUpDriver() {
       if (response.data == null) {
         console.log("UserName exist! please choose unique userName");
       } else {
-        setForm((prevState) => ({
-          ...prevState,
-          user: { id: response.data.id },
-        }));
+        console.log("id is:");
+        console.log(response.data.id);
+        let newForm = { ...form };
+        newForm.user = { id: response.data.id };
+        console.log("new form is:");
+        console.log(newForm);
         axios
-          .post("http://localhost:8080/driver", form)
+          .post("http://localhost:8080/driver", newForm)
           .then(function (response) {
             if (response.data === null) {
               console.log("email exist! please choose unique userName");
             } else {
-              const action = setUser(form);
+              const action = setUser(newForm);
               dispatch(action);
-              user = { userName: form.id, password: form.password };
+              user = { userName: newForm.id, password: newForm.password };
               axios
                 .post("http://localhost:8080/login", user)
                 .then(function (response) {
@@ -85,7 +87,7 @@ function SignUpDriver() {
             </div>
             <div className="form">
               <form>
-              <h1>Sign Up</h1>
+                <h1>Sign Up</h1>
                 <div className="flexForm">
                   <div>
                     <label>Driver Name: </label>
