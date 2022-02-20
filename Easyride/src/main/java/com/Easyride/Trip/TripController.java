@@ -40,6 +40,14 @@ public class TripController {
     public Trip updateTrip(@PathVariable String id, @PathVariable String accepted, @RequestBody Driver driver){
         return tripServices.updateTripAccepted(id, accepted, driver);
     }
+    @PutMapping("/canceled/{id}")
+    public Trip updateTripCanceled(@PathVariable String id){
+        return tripServices.updateTripCanceled(id);
+    }
+    @PutMapping("/ended/{id}")
+    public Trip updateTripEnded(@PathVariable String id){
+        return tripServices.updateTripEnded(id);
+    }
 
     @DeleteMapping ("/{id}")
     public Trip deleteRider(@PathVariable String id){

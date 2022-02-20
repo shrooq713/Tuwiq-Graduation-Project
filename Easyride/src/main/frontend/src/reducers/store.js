@@ -3,7 +3,8 @@ import webSocketRef from "./WebSocket/webSocketRef";
 import User from "./User/User";
 import Trips from "./Trips/Trips";
 import DriverLocation from "./DriverLocation/DriverLocation";
-import ActiveTrip from "../components/ActiveTrip";
+import ActiveTrip from "./ActiveTrip/ActiveTrip";
+
 
 const reducers = combineReducers({
   webSocketRef,

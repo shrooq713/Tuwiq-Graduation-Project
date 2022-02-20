@@ -6,12 +6,14 @@ import {
   InfoWindow,
 } from "@react-google-maps/api";
 import "@reach/combobox/styles.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NavBar from "./Navbar";
 import mapStyles from "../mapStyles";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
 import axios from "axios";
+import { addTrips } from "../reducers/Trips/Trips";
+import { addActiveTrip } from "../reducers/ActiveTrip/ActiveTrip";
 
 const libraries = ["places"];
 const mapContainerStyle = {
@@ -32,6 +34,7 @@ const center = {
 
 export default function Driver() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const state = useSelector((state) => {
     return {
       user: state.User.user,
@@ -54,10 +57,17 @@ export default function Driver() {
   if (!isLoaded) return "Loading...";
 
   const AcceptClicked = () => {
+    console.log("AcceptClicked");
+    console.log(selected);
+    console.log(state.user);
     axios
       .put(`http://localhost:8080/trip/${selected.id}/true`, state.user)
       .then(function (response) {
         console.log(response.data);
+        console.log("trip selected");
+        console.log(selected);
+        dispatch(addActiveTrip(response.data));
+
       })
       .catch(function (error) {
         console.error(error);
@@ -92,7 +102,9 @@ export default function Driver() {
         {/* pin trips */}
         {console.log(state.trips)}
         {state.trips.map((marker) => {
-          if (marker.accepted === "false") {
+          console.log(marker.pickUpLat + " " + marker.accepted);
+          if (marker.accepted === false) {
+            console.log("accepted??????????????????? yes");
             return (
               <Marker
                 key={`${marker.pickUpLat}-${marker.pickUpLng}`}
@@ -109,8 +121,9 @@ export default function Driver() {
               />
             );
           }
-          return;
+          // return;
         })}
+        {console.log(selected)}
         {selected ? (
           <InfoWindow
             position={{ lat: selected.pickUpLat, lng: selected.pickUpLng }}
@@ -118,30 +131,29 @@ export default function Driver() {
               setSelected(null);
             }}
           >
-            <div>
-              <h2>
+            <div className="selected-marker">
+              <h2 className="selected-txt">
                 <span role="img" aria-label="bear">
                   👤
                 </span>{" "}
                 Trip
               </h2>
-              <p>
+              <p className="selected-txt">
                 Rider name:{" "}
                 {selected.rider.firstName + " " + selected.rider.lastName}
               </p>
-              <p>Day: {selected.day}</p>
-              <p>Time: {selected.time}</p>
-              <button onClick={AcceptClicked}>
+              <p className="selected-txt">Day: {selected.day}</p>
+              <p className="selected-txt">Time: {selected.time}</p>
+              <button className="selected-btn" onClick={AcceptClicked}>
                 <Link
                   to={{
-                    pathname: `/activeTrip/${selected.id}`,
+                    pathname: `/active/${selected.id}`,
                   }}
                 >
-                  <img
-                    className="accept-img"
-                    src="https://www.svgrepo.com/show/92787/check-mark.svg"
-                    alt="Logo"
-                  />
+                  <div class="accept-img">
+                    {" "}
+                    <p></p>
+                  </div>
                 </Link>
               </button>
             </div>

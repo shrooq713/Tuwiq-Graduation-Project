@@ -14,14 +14,16 @@ public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private long pickUpLat;
-    private long pickUpLng;
-    private long dropLat;
-    private long dropLng;
+    private float pickUpLat;
+    private float pickUpLng;
+    private float dropLat;
+    private float dropLng;
     private String time;
     private String day;
-    private String confirmed;
-    private String accepted;
+    private boolean confirmed;
+    private boolean accepted;
+    private boolean canceled;
+    private boolean ended;
 
     @ManyToOne
     @JoinColumn(name = "driver_id")
@@ -31,7 +33,7 @@ public class Trip {
     @JoinColumn(name = "rider_id")
     private Rider rider;
 
-    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day, String confirmed) {
+    public Trip(double pickUpLat, double pickUpLng, double dropLat, double dropLng, String time, String day, boolean confirmed, boolean accepted,boolean cansled) {
     }
 
     public Trip() {

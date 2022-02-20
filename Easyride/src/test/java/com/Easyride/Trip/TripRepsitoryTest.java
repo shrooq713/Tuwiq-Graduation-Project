@@ -20,14 +20,14 @@ class TripRepsitoryTest {
 
     @Test
     void itShouldFindTrip() {
-        Trip trip = new Trip(24.56,47.83,24.56,47.83,"12:34","Saturday","true");
+        Trip trip = new Trip(24.56,47.83,24.56,47.83,"12:34","Saturday",false,false, false);
         Trip savedTrip = tripRepsitory.save(trip);
         Trip result = tripRepsitory.findById(savedTrip.getId()).orElse(null);
         assertNotNull(result);
     }
     @Test
     void itShouldSaveCity() {
-        Trip trip = new Trip(24.56,47.83,24.56,47.83,"12:34","Saturday","true");
+        Trip trip = new Trip(24.56,47.83,24.56,47.83,"12:34","Saturday",false,false, false);
         Trip savedTrip = tripRepsitory.save(trip);
         assertTrue(Long.valueOf(savedTrip.getId()) != null);
     }

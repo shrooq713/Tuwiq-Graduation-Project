@@ -43,7 +43,6 @@ function NavBar() {
             ) : (
               <ul />
             )}
-            {console.log(state.user.id)}
           </div>
         </div>
       </nav>
